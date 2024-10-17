@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ThemeSwitch from "./ThemeSwitch";
 
 const MainNavbar = () => {
   return (
-    <div>MainNavbar</div>
-  )
-}
+    <div>
+      
+    </div>
+  );
+};
 
-export default MainNavbar
+export default MainNavbar;
