@@ -113,10 +113,10 @@ const ListItem = ({ title, icon, href, desc, color }: ListItemType) => {
           href={href}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "flex items-center gap-2 justify-start py-12 border shadow-md"
+            "flex items-center gap-2 justify-start py-12 border shadow-md hover:shadow-sm [&_svg]:size-10"
           )}
         >
-          <div className={`[&_svg]:size-10 p-2 rounded-sm text-white ${color}`}>
+          <div className={`p-2 rounded-sm text-white ${color}`}>
             {icon}
           </div>
           <div className="">
