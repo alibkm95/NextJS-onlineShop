@@ -132,7 +132,7 @@ const SideMenu = () => {
                       </SheetClose>
                       <SheetClose asChild>
                         <Link
-                          href="/products?cat=bike"
+                          href="/products?cat=scooter"
                           className={cn(
                             buttonVariants({ variant: "ghost" }),
                             "w-full justify-start items-center"
@@ -153,17 +153,6 @@ const SideMenu = () => {
                     )}
                   >
                     <Headset /> Contact
-                  </Link>
-                </SheetClose>
-                <SheetClose asChild>
-                  <Link
-                    href="/support"
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "justify-start items-center md:[&_svg]:size-5 md:text-lg"
-                    )}
-                  >
-                    <TicketCheck /> Support
                   </Link>
                 </SheetClose>
               </div>

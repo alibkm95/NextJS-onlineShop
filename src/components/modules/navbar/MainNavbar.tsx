@@ -20,6 +20,7 @@ import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import ShoppingCartSidebar from "./ShoppingCartSidebar";
+import MainMenu from "./MainMenu";
 
 const MainNavbar = () => {
   const user = false;
@@ -36,7 +37,9 @@ const MainNavbar = () => {
               className="w-full max-w-[100px] md:max-w-[140px] lg:max-w-[160px]"
             />
           </Link>
-          <div className="flex-1"></div>
+          <div className="flex-1">
+            <MainMenu />
+          </div>
           <div className="flex items-center">
             <Link
               href="/search"

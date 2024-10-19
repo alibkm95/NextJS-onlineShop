@@ -1,5 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { ShoppingCart as ShoppingCartIcon } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  CreditCard,
+  ShoppingCart as ShoppingCartIcon,
+  Trash,
+} from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -12,8 +16,14 @@ import {
 } from "@/components/ui/sheet";
 import React from "react";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import ProductCartSM from "../itemBox/ProductCartSM";
 
 const ShoppingCartSidebar = () => {
+  const userCart = [1];
+
   return (
     <div>
       <Sheet>
@@ -25,16 +35,55 @@ const ShoppingCartSidebar = () => {
         <SheetContent>
           <div className="flex flex-col h-full gap-3">
             <SheetHeader>
-              <SheetTitle>Cart</SheetTitle>
-              <SheetDescription>Your shopping cart</SheetDescription>
+              <SheetTitle>Shopping Cart</SheetTitle>
+              <SheetDescription>5 products in your shopping cart</SheetDescription>
             </SheetHeader>
             <Separator />
             <div className="flex-1 overflow-y-auto">
-              <div className="flex flex-col gap-2 w-full">body</div>
+              <div className="flex flex-col gap-2 w-full">
+                {userCart.length === 0 ? (
+                  <div>
+                    <Image
+                      src="/images/empty-cart.png"
+                      width={300}
+                      height={300}
+                      alt="empty-cart"
+                      className="w-2/3 mx-auto"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <ProductCartSM />
+                    <ProductCartSM />
+                    <ProductCartSM />
+                    <ProductCartSM />
+                    <ProductCartSM />
+                  </div>
+                )}
+              </div>
             </div>
             <Separator />
             <SheetFooter className="w-full">
-              <div className="w-full">footer</div>
+              <div className="w-full flex flex-col gap-2">
+                <SheetClose asChild>
+                  <Link
+                    href="/cart"
+                    className={cn(
+                      buttonVariants(),
+                      "bg-emerald-600 hover:bg-emerald-500"
+                    )}
+                  >
+                    <CreditCard />
+                    Continue purchase
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button variant="destructive">
+                    <Trash />
+                    Remove all
+                  </Button>
+                </SheetClose>
+              </div>
             </SheetFooter>
           </div>
         </SheetContent>
