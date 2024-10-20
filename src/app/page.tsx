@@ -1,7 +1,8 @@
 import Hero from "@/components/templates/Hero";
-import ProductSwiper from "@/components/templates/ProductSwiper";
+import ProductSwiper from "@/components/modules/swiper/ProductSwiper";
 import { Bike, Car, PackagePlus, Percent, Star } from "lucide-react";
 import { MdElectricScooter } from "react-icons/md";
+import ContactUsBanner from "@/components/templates/ContactUsBanner";
 
 export default function Home() {
   const products = [
@@ -50,7 +51,9 @@ export default function Home() {
       <ProductSwiper
         products={products}
         title="Most popular"
-        icon={<Star className="text-amber-500 fill-amber-500 size-6 md:size-8" />}
+        icon={
+          <Star className="text-amber-500 fill-amber-500 size-6 md:size-8" />
+        }
         href="/products"
         showButton={true}
       />
@@ -61,6 +64,7 @@ export default function Home() {
         href="/products"
         showButton={true}
       />
+      <ContactUsBanner />
     </>
   );
 }

@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
-import MaxWidthWrapper from "../modules/MaxWidthWrapper";
+import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
 import Link from "next/link";
 import { CircleArrowRight } from "lucide-react";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import ProductCartMD from "../modules/itemBox/ProductCartMD";
+import ProductCartMD from "@/components/modules/itemBox/ProductCartMD";
 
 type ProductType = {
   id: number;

@@ -82,8 +82,8 @@ const MainMenu = () => {
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-[600px] xl:w-[800px] p-4 grid grid-cols-2 gap-2">
-                {menuListItems.map((listItem) => (
-                  <ListItem key={crypto.randomUUID()} {...listItem} />
+                {menuListItems.map((listItem, index) => (
+                  <ListItem key={index + 1} {...listItem} />
                 ))}
               </ul>
             </NavigationMenuContent>
@@ -116,9 +116,7 @@ const ListItem = ({ title, icon, href, desc, color }: ListItemType) => {
             "flex items-center gap-2 justify-start py-12 border shadow-md hover:shadow-sm [&_svg]:size-10"
           )}
         >
-          <div className={`p-2 rounded-sm text-white ${color}`}>
-            {icon}
-          </div>
+          <div className={`p-2 rounded-sm text-white ${color}`}>{icon}</div>
           <div className="">
             <p className="text-xl font-semibold">{title}</p>
             <span className="text-wrap text-xs">{desc}</span>
