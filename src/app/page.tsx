@@ -3,6 +3,7 @@ import ProductSwiper from "@/components/modules/swiper/ProductSwiper";
 import { Bike, Car, PackagePlus, Percent, Star } from "lucide-react";
 import { MdElectricScooter } from "react-icons/md";
 import ContactUsBanner from "@/components/templates/ContactUsBanner";
+import Testimonials from "@/components/templates/Testimonials";
 
 export default function Home() {
   const products = [
@@ -65,6 +66,7 @@ export default function Home() {
         showButton={true}
       />
       <ContactUsBanner />
+      <Testimonials />
     </>
   );
 }

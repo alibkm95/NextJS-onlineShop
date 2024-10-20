@@ -20,7 +20,7 @@ const ContactUsBanner = () => {
               and write down your comments about our services, products, ... .
             </p>
             <Link href="/contact" className={buttonVariants()}>
-              Go to contact <MessageSquareQuote />
+              Start ... <MessageSquareQuote />
             </Link>
           </div>
           <div className="w-full max-w-[500px]">

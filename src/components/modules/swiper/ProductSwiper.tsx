@@ -42,7 +42,7 @@ const ProductSwiper = ({
             <h4 className="font-bold md:text-xl lg:text-3xl">{title}</h4>
           </div>
           {showButton && (
-            <Link href={href || "/products"} className={buttonVariants()}>
+            <Link href={href || "/products"} className={buttonVariants({size: 'sm'})}>
               more <CircleArrowRight />
             </Link>
           )}
