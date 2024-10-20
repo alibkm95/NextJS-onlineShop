@@ -29,7 +29,7 @@ const Hero = () => {
             }}
             navigation={true}
             modules={[Parallax, Pagination, Navigation, Autoplay]}
-            className="heroSwiper"
+            className="hero-swiper"
           >
             <div
               slot="container-start"
