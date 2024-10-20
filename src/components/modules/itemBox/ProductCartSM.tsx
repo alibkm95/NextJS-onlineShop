@@ -1,13 +1,11 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { DollarSign, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const ProductCartSM = () => {
   return (
-    <div className="border rounded-sm p-2 bg-secondary">
+    <div className="border rounded-sm p-2 bg-secondary space-y-2">
       <div className="flex flex-col items-center gap-2 md:flex-row">
         <Image
           src="/images/product-fallback.png"
@@ -28,16 +26,12 @@ const ProductCartSM = () => {
             128.50
             <span className="opacity-70 line-through ms-2">150.00</span>
           </span>
-          <Button
-            variant="destructive"
-            size="sm"
-            className="w-full"
-          >
-            <Trash />
-            Remove
-          </Button>
         </div>
       </div>
+      <Button variant="destructive" size="sm" className="w-full">
+        <Trash />
+        Remove
+      </Button>
     </div>
   );
 };
