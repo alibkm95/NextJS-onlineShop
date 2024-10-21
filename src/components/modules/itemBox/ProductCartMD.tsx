@@ -15,6 +15,7 @@ const ProductCartMD = () => {
         height={180}
         alt="product"
         className="w-full"
+        priority={false}
       />
       <div className="flex-1 py-3 px-4 space-y-3">
         <Link href="/" className="hover:text-emerald-600 transition-all">
@@ -37,7 +38,7 @@ const ProductCartMD = () => {
       <Separator className="mx-auto w-[95%]" />
       <div className="p-2 ms-auto">
         <Link
-          href="/"
+          href="/product/123"
           className={cn(buttonVariants({ variant: "outline" }), "w-max")}
         >
           Details <ArrowRight />

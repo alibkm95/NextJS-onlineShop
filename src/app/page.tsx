@@ -1,9 +1,8 @@
-import Hero from "@/components/templates/Hero";
 import ProductSwiper from "@/components/modules/swiper/ProductSwiper";
-import { Bike, Car, PackagePlus, Percent, Star } from "lucide-react";
-import { MdElectricScooter } from "react-icons/md";
 import ContactUsBanner from "@/components/templates/ContactUsBanner";
+import Hero from "@/components/templates/Hero";
 import Testimonials from "@/components/templates/Testimonials";
+import { PackagePlus, Percent, Star } from "lucide-react";
 
 export default function Home() {
   const products = [
@@ -40,7 +39,7 @@ export default function Home() {
   ];
 
   return (
-    <>
+    <main>
       <Hero />
       <ProductSwiper
         products={products}
@@ -67,6 +66,6 @@ export default function Home() {
       />
       <ContactUsBanner />
       <Testimonials />
-    </>
+    </main>
   );
 }
