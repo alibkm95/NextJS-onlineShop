@@ -4,8 +4,10 @@ export const RegisterFormValidation = z.object({
   fullName: z
     .string()
     .min(3, "Name must be at least 3 characters!")
-    .max(50, "Name must be at most 50 characters!"),
-  email: z.string().email("Invalid email address!"),
+    .max(50, "Name must be at most 50 characters!")
+    .trim()
+    .toLowerCase(),
+  email: z.string().email("Invalid email address!").trim().toLowerCase(),
   password: z
     .string()
     .min(8, "password must be at least 8 characters")
@@ -16,4 +18,9 @@ export const RegisterFormValidation = z.object({
   terms: z
     .boolean()
     .refine((val) => val === true, "You must accept the terms and conditions"),
+});
+
+export const LoginFormValidation = z.object({
+  email: z.string().email("Invalid email address!"),
+  password: z.string().min(8, "Password must be at least 8 characters!"),
 });
