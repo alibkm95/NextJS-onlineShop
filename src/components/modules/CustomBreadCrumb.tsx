@@ -25,17 +25,17 @@ const CustomBreadCrumb = ({ pagesPath }: CustomBreadCrumbPropsType) => {
         {pagesPath.map((item, index) => (
           <>
             {item.path ? (
-              <BreadcrumbItem>
+              <BreadcrumbItem key={index}>
                 <BreadcrumbLink asChild>
                   <Link href={item.path}>{item.page}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
             ) : (
-              <BreadcrumbItem>
+              <BreadcrumbItem key={index}>
                 <BreadcrumbPage>{item.page}</BreadcrumbPage>
               </BreadcrumbItem>
             )}
-            {index + 1 < pagesPath.length && <BreadcrumbSeparator />}
+            {index + 1 < pagesPath.length && <BreadcrumbSeparator key={index} />}
           </>
         ))}
       </BreadcrumbList>
