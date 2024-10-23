@@ -24,3 +24,7 @@ export const LoginFormValidation = z.object({
   email: z.string().email("Invalid email address!"),
   password: z.string().min(8, "Password must be at least 8 characters!"),
 });
+
+export const VerifyFormValidation = z.object({
+  otpCode: z.string().min(6, "OPT code must be at least 6 characters!"),
+});
