@@ -43,3 +43,11 @@ export const resetFormValidation = z.object({
       "Password must contain at least one upper case, one lower case and one digit!"
     ),
 });
+
+export const ContactFormValidation = z.object({
+  email: z.string().email("Invalid email address!"),
+  textMessage: z
+    .string()
+    .max(200, "Message con not be more than 200 characters!")
+    .refine((val) => val !== "", "Text message must be provided!"),
+});
