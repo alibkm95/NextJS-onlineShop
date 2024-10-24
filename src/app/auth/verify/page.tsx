@@ -1,7 +1,7 @@
-import VerifyAccountForm from '@/components/modules/forms/VerifyAccountForm'
-import MaxWidthWrapper from '@/components/modules/MaxWidthWrapper'
-import { BadgeCheck } from 'lucide-react'
-import React from 'react'
+import VerifyAccountForm from "@/components/modules/forms/VerifyAccountForm";
+import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
+import { BadgeCheck } from "lucide-react";
+import React from "react";
 
 const Verify = () => {
   return (
@@ -29,7 +29,7 @@ const Verify = () => {
         </div>
       </MaxWidthWrapper>
     </section>
-  )
-}
+  );
+};
 
-export default Verify
+export default Verify;

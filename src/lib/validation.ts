@@ -28,3 +28,18 @@ export const LoginFormValidation = z.object({
 export const VerifyFormValidation = z.object({
   otpCode: z.string().min(6, "OPT code must be at least 6 characters!"),
 });
+
+export const findAccountFormValidation = z.object({
+  email: z.string().email("Invalid email address!"),
+});
+
+export const resetFormValidation = z.object({
+  otpCode: z.string().min(6, "OPT code must be at least 6 characters!"),
+  password: z
+    .string()
+    .min(8, "password must be at least 8 characters")
+    .refine(
+      (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password),
+      "Password must contain at least one upper case, one lower case and one digit!"
+    ),
+});

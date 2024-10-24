@@ -84,7 +84,7 @@ const VerifyAccountForm = () => {
         </span>
         <Button
           type="submit"
-          className="bg-emerald-600 hover:bg-emerald-700 w-max"
+          className="bg-emerald-600 hover:bg-emerald-700 w-max ms-auto"
         >
           <ShieldCheck />
           Verify
