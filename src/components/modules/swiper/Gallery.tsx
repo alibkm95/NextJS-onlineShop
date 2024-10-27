@@ -22,7 +22,7 @@ const fakeGallery = [
 const Gallery = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
   return (
-    <div className="rounded-lg bg-secondary max-w-full p-2">
+    <div className="rounded-lg bg-secondary w-full max-w-[600px] p-2 mx-auto h-max">
       <div>
         <Swiper
           zoom={true}

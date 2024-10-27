@@ -2,7 +2,7 @@ import CustomBreadCrumb, {
   BreadrumbPathType,
 } from "@/components/modules/CustomBreadCrumb";
 import CustomPagination from "@/components/modules/CustomPagination";
-import ProductCartMD from "@/components/modules/itemBox/ProductCartMD";
+import ProductCardMD from "@/components/modules/itemBox/ProductCardMD";
 import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,12 +52,12 @@ const SearchPage = () => {
             </div>
           ) : (
             <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center">
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
             </div>
           )}
           <div className="mt-8">

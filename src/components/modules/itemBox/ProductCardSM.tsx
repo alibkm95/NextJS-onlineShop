@@ -3,9 +3,9 @@ import { DollarSign, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductCartSM = () => {
+const ProductCardSM = ({ showBtn }: { showBtn?: boolean }) => {
   return (
-    <div className="border rounded-sm p-2 bg-secondary space-y-2">
+    <div className="border rounded-sm p-2 bg-secondary space-y-2 w-full max-w-72 lg:max-w-full mx-auto">
       <div className="flex flex-col items-center gap-2 md:flex-row">
         <Image
           src="/images/product-fallback.png"
@@ -28,12 +28,14 @@ const ProductCartSM = () => {
           </span>
         </div>
       </div>
-      <Button variant="destructive" size="sm" className="w-full">
-        <Trash />
-        Remove
-      </Button>
+      {showBtn && (
+        <Button variant="destructive" size="sm" className="w-full">
+          <Trash />
+          Remove
+        </Button>
+      )}
     </div>
   );
 };
 
-export default ProductCartSM;
+export default ProductCardSM;

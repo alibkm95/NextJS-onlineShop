@@ -9,7 +9,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import ProductCartMD from "@/components/modules/itemBox/ProductCartMD";
+import ProductCardMD from "@/components/modules/itemBox/ProductCardMD";
 
 type ProductType = {
   id: number;
@@ -87,7 +87,7 @@ const ProductSwiper = ({
           >
             {products.map((product) => (
               <SwiperSlide key={product.id} className="pt-2 pb-12 px-1">
-                <ProductCartMD />
+                <ProductCardMD />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -2,7 +2,7 @@ import CustomBreadCrumb, {
   BreadrumbPathType,
 } from "@/components/modules/CustomBreadCrumb";
 import CustomPagination from "@/components/modules/CustomPagination";
-import ProductCartMD from "@/components/modules/itemBox/ProductCartMD";
+import ProductCardMD from "@/components/modules/itemBox/ProductCardMD";
 import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
 import ShopFilter from "@/components/templates/ShopFilter";
 import { Package } from "lucide-react";
@@ -32,11 +32,11 @@ const Products = () => {
           </div>
           <div className="p-4">
             <div className="grid place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
-              <ProductCartMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
+              <ProductCardMD />
             </div>
             <div className="py-4 mt-4">
               <CustomPagination />

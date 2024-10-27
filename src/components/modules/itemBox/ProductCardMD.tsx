@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const ProductCartMD = () => {
+const ProductCardMD = () => {
   return (
     <div className="w-full max-w-[280px] h-full border bg-background flex flex-col rounded-lg overflow-hidden shadow-md mx-auto">
       <Image
@@ -48,4 +48,4 @@ const ProductCartMD = () => {
   );
 };
 
-export default ProductCartMD;
+export default ProductCardMD;

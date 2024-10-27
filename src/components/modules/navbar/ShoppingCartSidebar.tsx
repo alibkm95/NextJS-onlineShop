@@ -19,7 +19,8 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import ProductCartSM from "../itemBox/ProductCartSM";
+import ProductCardSM from "../itemBox/ProductCardSM";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ShoppingCartSidebar = () => {
   const userCart = [1];
@@ -36,31 +37,35 @@ const ShoppingCartSidebar = () => {
           <div className="flex flex-col h-full gap-3">
             <SheetHeader>
               <SheetTitle>Shopping Cart</SheetTitle>
-              <SheetDescription>5 products in your shopping cart</SheetDescription>
+              <SheetDescription>
+                5 products in your shopping cart
+              </SheetDescription>
             </SheetHeader>
             <Separator />
-            <div className="flex-1 overflow-y-auto">
-              <div className="flex flex-col gap-2 w-full">
-                {userCart.length === 0 ? (
-                  <div>
-                    <Image
-                      src="/images/empty-cart.png"
-                      width={300}
-                      height={300}
-                      alt="empty-cart"
-                      className="w-2/3 mx-auto"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                    <ProductCartSM />
-                    <ProductCartSM />
-                    <ProductCartSM />
-                    <ProductCartSM />
-                    <ProductCartSM />
-                  </div>
-                )}
-              </div>
+            <div className="flex-1">
+              <ScrollArea className="h-max">
+                <div className="flex flex-col gap-2 w-full">
+                  {userCart.length === 0 ? (
+                    <div>
+                      <Image
+                        src="/images/empty-cart.png"
+                        width={300}
+                        height={300}
+                        alt="empty-cart"
+                        className="w-2/3 mx-auto"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-2">
+                      <ProductCardSM showBtn={true} />
+                      <ProductCardSM showBtn={true} />
+                      <ProductCardSM showBtn={true} />
+                      <ProductCardSM showBtn={true} />
+                      <ProductCardSM showBtn={true} />
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
             </div>
             <Separator />
             <SheetFooter className="w-full">
