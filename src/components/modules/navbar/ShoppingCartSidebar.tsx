@@ -20,7 +20,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import ProductCardSM from "../itemBox/ProductCardSM";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ShoppingCartSidebar = () => {
   const userCart = [1];
@@ -42,30 +41,28 @@ const ShoppingCartSidebar = () => {
               </SheetDescription>
             </SheetHeader>
             <Separator />
-            <div className="flex-1">
-              <ScrollArea className="h-max">
-                <div className="flex flex-col gap-2 w-full">
-                  {userCart.length === 0 ? (
-                    <div>
-                      <Image
-                        src="/images/empty-cart.png"
-                        width={300}
-                        height={300}
-                        alt="empty-cart"
-                        className="w-2/3 mx-auto"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex flex-col gap-2">
-                      <ProductCardSM showBtn={true} />
-                      <ProductCardSM showBtn={true} />
-                      <ProductCardSM showBtn={true} />
-                      <ProductCardSM showBtn={true} />
-                      <ProductCardSM showBtn={true} />
-                    </div>
-                  )}
-                </div>
-              </ScrollArea>
+            <div className="flex-1 overflow-y-auto">
+              <div className="flex flex-col gap-2 w-full">
+                {userCart.length === 0 ? (
+                  <div>
+                    <Image
+                      src="/images/empty-cart.png"
+                      width={300}
+                      height={300}
+                      alt="empty-cart"
+                      className="w-2/3 mx-auto"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <ProductCardSM showBtn={true} />
+                    <ProductCardSM showBtn={true} />
+                    <ProductCardSM showBtn={true} />
+                    <ProductCardSM showBtn={true} />
+                    <ProductCardSM showBtn={true} />
+                  </div>
+                )}
+              </div>
             </div>
             <Separator />
             <SheetFooter className="w-full">
