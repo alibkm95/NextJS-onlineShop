@@ -5,6 +5,7 @@ import UserDetailBox from "@/components/modules/itemBox/UserDetailBox";
 import { DollarSign, LogOut } from "lucide-react";
 import UpdateProfile from "@/components/templates/userPanel/UpdateProfile";
 import { Button } from "@/components/ui/button";
+import UserPanelTabs from "@/components/templates/userPanel/UserPanelTabs";
 
 const UserPanel = () => {
   return (
@@ -36,7 +37,7 @@ const UserPanel = () => {
             </div>
           </div>
           <div className="col-span-2 md:col-span-1">
-            <UserDetailBox headerText="Account balance" linkText="withrow">
+            <UserDetailBox headerText="Account balance" linkText="check your wallet" linkPath="/panel?tab=wallet">
               <div className="flex items-center gap-2 justify-between">
                 <span className="text-2xl font-bold text-emerald-700">
                   10,000
@@ -58,7 +59,7 @@ const UserPanel = () => {
             </UserDetailBox>
           </div>
         </div>
-        <div className=""></div>
+        <UserPanelTabs />
       </MaxWidthWrapper>
     </section>
   );
