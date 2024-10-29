@@ -1,9 +1,7 @@
 "use client";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { DialogClose } from "@/components/ui/dialog";
+import { DrawerClose } from "@/components/ui/drawer";
 import {
   Form,
   FormControl,
@@ -12,6 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -19,8 +18,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { shopFilterFormValidation } from "@/lib/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowDown10,
   ArrowDownAZ,
@@ -33,15 +34,12 @@ import {
   ClockArrowUp,
   Component,
   Filter,
-  Percent,
   RotateCcw,
-  Star,
+  Star
 } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { MdElectricScooter } from "react-icons/md";
-import { Switch } from "@/components/ui/switch";
-import { DialogClose } from "@/components/ui/dialog";
-import { DrawerClose } from "@/components/ui/drawer";
-import useMediaQuery from "@/hooks/useMediaQuery";
+import { z } from "zod";
 
 const ShopFilterForm = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");

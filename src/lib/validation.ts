@@ -117,3 +117,9 @@ export const invoiceFormValidation = z.object({
       "Total price must be a positive number!"
     ),
 });
+
+export const updateProfileFormValidation = z.object({
+  profileImage: z
+    .instanceof(File, { message: "Please select a valid file to upload!" })
+    .refine((file) => file !== undefined, "You must select a file"),
+});
