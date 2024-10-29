@@ -89,3 +89,31 @@ export const newCommentFormValidation = z.object({
     .min(1, "Rating score must be provided!")
     .max(5, "Maximum rating score is 5!"),
 });
+
+export const invoiceFormValidation = z.object({
+  discountCode: z.string().optional(),
+  subTotal: z
+    .string()
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) >= 0,
+      "Subtotal price must be a positive number!"
+    ),
+  discount: z
+    .string()
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) >= 0,
+      "Discount price must be a positive number!"
+    ),
+  tax: z
+    .string()
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) >= 0,
+      "Tax price must be a positive number!"
+    ),
+  total: z
+    .string()
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) >= 0,
+      "Total price must be a positive number!"
+    ),
+});
