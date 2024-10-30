@@ -82,3 +82,11 @@ body {
 .testimonialSwiper>.swiper-wrapper {
   align-items: center;
 }
+
+.PhoneInputInput {
+  outline: none;
+  margin-left: 4px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+}

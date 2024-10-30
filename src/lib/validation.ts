@@ -123,3 +123,33 @@ export const updateProfileFormValidation = z.object({
     .instanceof(File, { message: "Please select a valid file to upload!" })
     .refine((file) => file !== undefined, "You must select a file"),
 });
+
+export const userAccountFormValidation = z.object({
+  fullName: z
+    .string()
+    .min(3, "Name must be at least 3 characters!")
+    .max(50, "Name must be at most 50 characters!")
+    .trim()
+    .toLowerCase(),
+  email: z.string().email("Invalid email address!").trim().toLowerCase(),
+  phone: z
+    .string()
+    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+  address: z.object({
+    country: z
+      .string()
+      .refine((val) => val !== "", "Shipping info must be provided!"),
+    city: z
+      .string()
+      .refine((val) => val !== "", "Shipping info must be provided!"),
+    street: z
+      .string()
+      .refine((val) => val !== "", "Shipping info must be provided!"),
+    number: z
+      .string()
+      .refine((val) => val !== "", "Shipping info must be provided!"),
+    postalCode: z
+      .string()
+      .refine((val) => val !== "", "Shipping info must be provided!"),
+  }),
+});
