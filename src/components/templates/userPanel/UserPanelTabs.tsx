@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CircleUserRound, Heart, Home, ListTodo, Ticket, Wallet } from "lucide-react";
 import UserAccountForm from "@/components/modules/forms/UserAccountForm";
+import UserWallet from "./UserWallet";
 
 const UserPanelTabs = () => {
   const searchParams = useSearchParams();
@@ -63,7 +64,9 @@ const UserPanelTabs = () => {
         <TabsContent value="account">
           <UserAccountForm />
         </TabsContent>
-        <TabsContent value="wallet">wallet</TabsContent>
+        <TabsContent value="wallet">
+          <UserWallet />
+        </TabsContent>
         <TabsContent value="orders">orders</TabsContent>
         <TabsContent value="tickets">tickets</TabsContent>
         <TabsContent value="wishes">wishes</TabsContent>
