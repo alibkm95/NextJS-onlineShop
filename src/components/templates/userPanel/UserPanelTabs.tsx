@@ -3,9 +3,17 @@ import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { CircleUserRound, Heart, Home, ListTodo, Ticket, Wallet } from "lucide-react";
+import {
+  CircleUserRound,
+  Heart,
+  Home,
+  ListTodo,
+  Ticket,
+  Wallet,
+} from "lucide-react";
 import UserAccountForm from "@/components/modules/forms/UserAccountForm";
 import UserWallet from "./UserWallet";
+import UserOrders from "./UserOrders";
 
 const UserPanelTabs = () => {
   const searchParams = useSearchParams();
@@ -30,31 +38,46 @@ const UserPanelTabs = () => {
         <div className="overflow-x-auto">
           <TabsList className="min-w-full">
             <TabsTrigger className="flex-1" value="account" asChild>
-              <Link href="/panel?tab=account" className="flex items-center gap-1">
+              <Link
+                href="/panel?tab=account"
+                className="flex items-center gap-1"
+              >
                 <CircleUserRound size={15} />
                 Account
               </Link>
             </TabsTrigger>
             <TabsTrigger className="flex-1" value="wallet" asChild>
-              <Link href="/panel?tab=wallet" className="flex items-center gap-1">
+              <Link
+                href="/panel?tab=wallet"
+                className="flex items-center gap-1"
+              >
                 <Wallet size={15} />
                 Wallet
               </Link>
             </TabsTrigger>
             <TabsTrigger className="flex-1" value="orders" asChild>
-              <Link href="/panel?tab=orders" className="flex items-center gap-1">
+              <Link
+                href="/panel?tab=orders"
+                className="flex items-center gap-1"
+              >
                 <ListTodo size={15} />
                 My Orders
               </Link>
             </TabsTrigger>
             <TabsTrigger className="flex-1" value="tickets" asChild>
-              <Link href="/panel?tab=tickets" className="flex items-center gap-1">
+              <Link
+                href="/panel?tab=tickets"
+                className="flex items-center gap-1"
+              >
                 <Ticket size={15} />
                 My Tickets
               </Link>
             </TabsTrigger>
             <TabsTrigger className="flex-1" value="wishes" asChild>
-              <Link href="/panel?tab=wishes" className="flex items-center gap-1">
+              <Link
+                href="/panel?tab=wishes"
+                className="flex items-center gap-1"
+              >
                 <Heart size={15} />
                 Wishlist
               </Link>
@@ -67,7 +90,9 @@ const UserPanelTabs = () => {
         <TabsContent value="wallet">
           <UserWallet />
         </TabsContent>
-        <TabsContent value="orders">orders</TabsContent>
+        <TabsContent value="orders">
+          <UserOrders />
+        </TabsContent>
         <TabsContent value="tickets">tickets</TabsContent>
         <TabsContent value="wishes">wishes</TabsContent>
       </Tabs>
