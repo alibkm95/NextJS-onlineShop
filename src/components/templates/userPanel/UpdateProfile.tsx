@@ -31,9 +31,9 @@ const UpdateProfile = () => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
+          <Button variant="ghost" size="sm" className="w-full items-center justify-start">
             <ImageIcon />
-            <span className="hidden md:inline lg:hidden xl:inline">Profile image</span>
+            Update profile image
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

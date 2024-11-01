@@ -14,6 +14,7 @@ import {
 import UserAccountForm from "@/components/modules/forms/UserAccountForm";
 import UserWallet from "./UserWallet";
 import UserOrders from "./UserOrders";
+import UserTickets from "./UserTickets";
 
 const UserPanelTabs = () => {
   const searchParams = useSearchParams();
@@ -93,7 +94,9 @@ const UserPanelTabs = () => {
         <TabsContent value="orders">
           <UserOrders />
         </TabsContent>
-        <TabsContent value="tickets">tickets</TabsContent>
+        <TabsContent value="tickets">
+          <UserTickets />
+        </TabsContent>
         <TabsContent value="wishes">wishes</TabsContent>
       </Tabs>
     </div>

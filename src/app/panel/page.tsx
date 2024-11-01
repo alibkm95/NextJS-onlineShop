@@ -1,11 +1,9 @@
-import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React from "react";
 import UserDetailBox from "@/components/modules/itemBox/UserDetailBox";
-import { DollarSign, LogOut } from "lucide-react";
-import UpdateProfile from "@/components/templates/userPanel/UpdateProfile";
-import { Button } from "@/components/ui/button";
+import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
 import UserPanelTabs from "@/components/templates/userPanel/UserPanelTabs";
+import UserQuickAction from "@/components/templates/userPanel/UserQuickAction";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DollarSign } from "lucide-react";
 
 const UserPanel = () => {
   return (
@@ -25,13 +23,7 @@ const UserPanel = () => {
                   <span className="block text-gray-500 text-xs mt-1">
                     2024/10/10
                   </span>
-                  <div className="flex items-center gap-1">
-                    <UpdateProfile />
-                    <Button variant="destructive" size="sm">
-                      <LogOut />
-                      <span className="hidden md:inline lg:hidden xl:inline">Logout</span>
-                    </Button>
-                  </div>
+                  <UserQuickAction />
                 </div>
               </div>
             </div>
