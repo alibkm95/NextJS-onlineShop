@@ -153,3 +153,19 @@ export const userAccountFormValidation = z.object({
       .refine((val) => val !== "", "Shipping info must be provided!"),
   }),
 });
+
+export const NewTicketFormValidation = z.object({
+  title: z
+    .string()
+    .max(100, "Ticket title can not be more than 100 characters!")
+    .refine((val) => val !== "", "Title must be provided!"),
+  ticketMessage: z
+    .string()
+    .max(500, "Message con not be more than 200 characters!")
+    .refine((val) => val !== "", "Ticket message must be provided!"),
+  attachment: z
+    .instanceof(File, {
+      message: "Please select a valid file to upload!",
+    })
+    .optional(),
+});
