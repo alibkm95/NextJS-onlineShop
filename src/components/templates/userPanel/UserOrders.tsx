@@ -1,4 +1,5 @@
-import React from "react";
+import CustomBadge from "@/components/modules/CustomBadge";
+import SectionNotFound from "@/components/modules/SectionNotFound";
 import {
   Table,
   TableBody,
@@ -9,21 +10,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { TriangleAlert } from "lucide-react";
-import CustomBadge from "@/components/modules/CustomBadge";
 import OrderDetailModal from "./OrderDetailModal";
 
 const UserOrders = () => {
   return (
     <div className="p-2 min-h-64">
-      <div>
-        <Alert>
-          <TriangleAlert className="h-4 w-4" />
-          <AlertTitle>Not found!</AlertTitle>
-          <AlertDescription>There is no previouse order!</AlertDescription>
-        </Alert>
-      </div>
+      <SectionNotFound
+        title="Not found!"
+        message="There is no previouse order!"
+      />
       <div className="max-w-full overflow-x-auto">
         <Table>
           <TableCaption>All previous orders</TableCaption>

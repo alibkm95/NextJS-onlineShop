@@ -1,16 +1,16 @@
 import CustomPagination from "@/components/modules/CustomPagination";
 import NewCommentForm from "@/components/modules/forms/NewCommentForm";
+import SectionNotFound from "@/components/modules/SectionNotFound";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CircleAlert, MessageSquareText, Star } from "lucide-react";
+import { MessageSquareText, Star } from "lucide-react";
 
 const ProductComments = () => {
   return (
@@ -41,14 +41,11 @@ const ProductComments = () => {
         </AccordionItem>
       </Accordion>
       <div className="flex flex-col gap-2 pt-2 px-2 md:px-4">
-        <Alert>
-          <CircleAlert className="h-4 w-4" />
-          <AlertTitle className="font-semibold">No comments found!</AlertTitle>
-          <AlertDescription>
-            There are no comments for this product yet. Be the first to post a
-            comment
-          </AlertDescription>
-        </Alert>
+        <SectionNotFound
+          title="No comments found!"
+          message="There are no comments for this product yet. Be the first to post a
+            comment."
+        />
         <Comment />
         <Comment />
         <Comment />

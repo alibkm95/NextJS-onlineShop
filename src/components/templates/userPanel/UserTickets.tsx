@@ -1,21 +1,19 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import CustomBadge from "@/components/modules/CustomBadge";
+import SectionNotFound from "@/components/modules/SectionNotFound";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from "@/components/ui/table";
-import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { CircleChevronRight, Ticket, TriangleAlert } from "lucide-react";
+import { CircleChevronRight, Ticket } from "lucide-react";
 import Link from "next/link";
-import React from "react";
-import CustomBadge from "@/components/modules/CustomBadge";
 
 const UserTickets = () => {
   return (
@@ -30,13 +28,7 @@ const UserTickets = () => {
         </Link>
       </div>
       <Separator className="my-2 md:my-3 lg:my-4" />
-      <div>
-        <Alert>
-          <TriangleAlert className="h-4 w-4" />
-          <AlertTitle>Not found!</AlertTitle>
-          <AlertDescription>There is no tickets yet!</AlertDescription>
-        </Alert>
-      </div>
+      <SectionNotFound title="Not found!" message="There is no tickets yet!" />
       <div className="max-w-full overflow-x-auto">
         <Table>
           <TableCaption>Tickets list</TableCaption>
