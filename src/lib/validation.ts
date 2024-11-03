@@ -169,3 +169,15 @@ export const NewTicketFormValidation = z.object({
     })
     .optional(),
 });
+
+export const addNewMessageFormValidation = z.object({
+  ticketMessage: z
+    .string()
+    .max(500, "Message con not be more than 200 characters!")
+    .refine((val) => val !== "", "Ticket message must be provided!"),
+  attachment: z
+    .instanceof(File, {
+      message: "Please select a valid file to upload!",
+    })
+    .optional(),
+});
