@@ -1,5 +1,6 @@
 import UserDetailBox from "@/components/modules/itemBox/UserDetailBox";
 import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
+import UpdateProfile from "@/components/templates/userPanel/UpdateProfile";
 import UserPanelTabs from "@/components/templates/userPanel/UserPanelTabs";
 import UserQuickAction from "@/components/templates/userPanel/UserQuickAction";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -23,13 +24,20 @@ const UserPanel = () => {
                   <span className="block text-gray-500 text-xs mt-1">
                     2024/10/10
                   </span>
-                  <UserQuickAction />
+                  <div className="flex items-center gap-1">
+                    <UpdateProfile />
+                    <UserQuickAction />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="col-span-2 md:col-span-1">
-            <UserDetailBox headerText="Account balance" linkText="check your wallet" linkPath="/panel?tab=wallet">
+            <UserDetailBox
+              headerText="Account balance"
+              linkText="check your wallet"
+              linkPath="/panel?tab=wallet"
+            >
               <div className="flex items-center gap-2 justify-between">
                 <span className="text-2xl font-bold text-emerald-700">
                   10,000

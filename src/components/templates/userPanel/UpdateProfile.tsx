@@ -1,4 +1,5 @@
 "use client";
+import UpdateProfileForm from "@/components/modules/forms/UpdateProfileForm";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,11 +18,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import useMediaQuery from "@/hooks/useMediaQuery";
-import { Image as ImageIcon, SlidersHorizontal } from "lucide-react";
-import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import UpdateProfileForm from "@/components/modules/forms/UpdateProfileForm";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { Image as ImageIcon } from "lucide-react";
+import { useState } from "react";
 
 const UpdateProfile = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -31,9 +31,8 @@ const UpdateProfile = () => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="ghost" size="sm" className="w-full items-center justify-start">
+          <Button variant="ghost" size="sm">
             <ImageIcon />
-            Update profile image
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

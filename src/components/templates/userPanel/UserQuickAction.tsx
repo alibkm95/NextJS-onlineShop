@@ -9,24 +9,39 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { EllipsisVertical, LogOut, Ticket } from "lucide-react";
+import {
+  EllipsisVertical,
+  LogOut,
+  ShieldCheck,
+  Store,
+  Ticket,
+} from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const UserQuickAction = () => {
+  // TODO => fix the dialog and dropdown menu issues
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-8 h-8 rounded-full">
+        <Button variant="ghost" size="sm">
           <EllipsisVertical />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="max-w-64">
         <DropdownMenuLabel>Quick actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <UpdateProfile />
+          <Link
+            href="/admin"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "w-full items-center justify-start cursor-pointer"
+            )}
+          >
+            <ShieldCheck className="text-indigo-700" />
+            Go to Admin Dashboard
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
@@ -36,8 +51,20 @@ const UserQuickAction = () => {
               "w-full items-center justify-start cursor-pointer"
             )}
           >
-            <Ticket />
+            <Ticket className="text-indigo-700" />
             Create new ticket
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="/products"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "w-full items-center justify-start cursor-pointer"
+            )}
+          >
+            <Store className="text-indigo-700" />
+            Order new products
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -48,16 +75,11 @@ const UserQuickAction = () => {
             className="w-full items-center justify-start cursor-pointer"
           >
             <LogOut />
-            <span className="hidden md:inline lg:hidden xl:inline">Logout</span>
+            Logout
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-
-    //   <div className="flex items-center gap-1">
-    //     <UpdateProfile />
-    //
-    //   </div>
   );
 };
 
