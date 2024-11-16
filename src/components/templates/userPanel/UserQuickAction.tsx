@@ -20,7 +20,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const UserQuickAction = () => {
-  // TODO => fix the dialog and dropdown menu issues
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

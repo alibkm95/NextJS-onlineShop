@@ -8,7 +8,8 @@ const Navbar = () => {
   const pathName = usePathname();
 
   if (pathName.startsWith("/admin")) {
-    return <AdminNavbar />;
+    // return <AdminNavbar />;
+    return null;
   }
 
   return <MainNavbar />;
