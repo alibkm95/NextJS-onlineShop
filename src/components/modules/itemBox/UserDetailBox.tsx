@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -6,6 +7,7 @@ interface UserDetailBoxProps {
   children: React.ReactNode;
   linkText: string;
   linkPath: string;
+  className?: string;
 }
 
 const UserDetailBox: React.FC<UserDetailBoxProps> = ({
@@ -13,10 +15,16 @@ const UserDetailBox: React.FC<UserDetailBoxProps> = ({
   children,
   linkText,
   linkPath,
+  className,
 }) => {
   return (
-    <div className="p-2 px-4 md:p-4 lg:p-6 border rounded-md shadow flex flex-col justify-between h-full">
-      <p className="text-sm">{headerText}</p>
+    <div
+      className={cn(
+        "p-2 px-4 md:p-4 lg:p-6 border rounded-md shadow flex flex-col justify-between h-full",
+        className
+      )}
+    >
+      <p className="text-sm font-bold">{headerText}</p>
       {children}
       <Link
         href={linkPath}
