@@ -236,7 +236,6 @@ const OrdersTable = () => {
       tableData={fakeOrders}
       dataColumnsDef={orderColumns}
       filterFns={{ emailFilter, dateRangeFilter }}
-      selectFilterItems={["completed", "shipping", "cancelled", "pending"]}
     />
   );
 };

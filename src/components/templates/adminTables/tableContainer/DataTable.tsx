@@ -44,6 +44,7 @@ import { cn, formatDateTime } from "@/lib/utils";
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: "text" | "numberRange" | "select" | "dateRange" | "none";
+    selectItems?: string[];
   }
 }
 
@@ -52,7 +53,6 @@ interface DataTableProps {
   dataColumnsDef: any;
   filterFns: {};
   extraAction?: React.ReactNode;
-  selectFilterItems?: string[];
 }
 
 function DataTable({
@@ -60,7 +60,6 @@ function DataTable({
   dataColumnsDef,
   filterFns,
   extraAction,
-  selectFilterItems,
 }: DataTableProps) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const columns = useMemo<ColumnDef<typeof tableData, any>[]>(() => {
@@ -152,10 +151,7 @@ function DataTable({
                           </div>
                           {header.column.getCanFilter() ? (
                             <div>
-                              <Filter
-                                column={header.column}
-                                selectItems={selectFilterItems}
-                              />
+                              <Filter column={header.column} />
                             </div>
                           ) : null}
                         </>
@@ -249,15 +245,9 @@ function DataTable({
   );
 }
 
-function Filter({
-  column,
-  selectItems,
-}: {
-  column: Column<any, unknown>;
-  selectItems?: string[];
-}) {
+function Filter({ column }: { column: Column<any, unknown> }) {
   const columnFilterValue = column.getFilterValue() as any;
-  const { filterVariant } = column.columnDef.meta ?? {};
+  const { filterVariant, selectItems } = column.columnDef.meta ?? {};
 
   switch (filterVariant) {
     case "select":

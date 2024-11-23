@@ -48,9 +48,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "orderCode",
-    header: () => (
-      <p className="my-1 inline-block font-bold">Order Code</p>
-    ),
+    header: () => <p className="my-1 inline-block font-bold">Order Code</p>,
     cell: ({ row }) => <p>{row.getValue("orderCode")}</p>,
     enableHiding: false,
     meta: {
@@ -59,9 +57,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "customer",
-    header: () => (
-      <p className="my-1 inline-block font-bold">Customer</p>
-    ),
+    header: () => <p className="my-1 inline-block font-bold">Customer</p>,
     cell: ({ row }) => {
       return <div className="lowercase">{row.original.customer.email}</div>;
     },
@@ -72,9 +68,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "total",
-    header: () => (
-      <p className="my-1 inline-block font-bold">Total</p>
-    ),
+    header: () => <p className="my-1 inline-block font-bold">Total</p>,
     cell: ({ row }) => (
       <div className="font-medium">{row.getValue("total")}</div>
     ),
@@ -85,9 +79,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "subtotal",
-    header: () => (
-      <p className="my-1 inline-block font-bold">Subtotal</p>
-    ),
+    header: () => <p className="my-1 inline-block font-bold">Subtotal</p>,
     cell: ({ row }) => (
       <div className="font-medium">{row.getValue("subtotal")}</div>
     ),
@@ -98,9 +90,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: () => (
-      <p className="my-1 inline-block font-bold">Date</p>
-    ),
+    header: () => <p className="my-1 inline-block font-bold">Date</p>,
     cell: ({ row }) => (
       <p className="text-14-regular min-w-[115px]">
         {formatDateTime(row.getValue("createdAt")).dateTime}
@@ -114,9 +104,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "status",
-    header: () => (
-      <p className="my-1 inline-block font-bold">Status</p>
-    ),
+    header: () => <p className="my-1 inline-block font-bold">Status</p>,
     cell: ({ row }) => {
       const status = row.getValue("status");
       switch (status) {
@@ -159,6 +147,7 @@ export const orderColumns: ColumnDef<OrderType>[] = [
     },
     meta: {
       filterVariant: "select",
+      selectItems: ["completed", "pending", "shipping", "cancelled"],
     },
   },
   {
