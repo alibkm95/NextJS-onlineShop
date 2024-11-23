@@ -22,7 +22,7 @@ export default async function Layout({
     <>
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
-        <SidebarInset>
+        <SidebarInset className="overflow-hidden">
           <header className="flex sticky top-0 z-50 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -40,7 +40,7 @@ export default async function Layout({
               <ThemeSwitch />
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+          <div className="flex-1 flex flex-col mx-auto p-6 w-full">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </>

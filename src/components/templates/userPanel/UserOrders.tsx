@@ -69,7 +69,7 @@ const UserOrders = () => {
               <TableCell>2024/07/08</TableCell>
               <TableCell>
                 <CustomBadge
-                  badgeText="Canceled"
+                  badgeText="Cancelled"
                   className="bg-destructive/20 border-destructive text-destructive text-xs"
                 />
               </TableCell>
