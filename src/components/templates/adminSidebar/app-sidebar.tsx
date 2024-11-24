@@ -47,19 +47,19 @@ const data = {
         },
         {
           title: "pending",
-          url: "/admin/orders?status=pending",
+          url: "/admin/orders?q=pending",
         },
         {
           title: "cancelled",
-          url: "/admin/orders?status=cancelled",
+          url: "/admin/orders?q=cancelled",
         },
         {
           title: "completed",
-          url: "/admin/orders?status=completed",
+          url: "/admin/orders?q=completed",
         },
         {
           title: "shipping",
-          url: "/admin/orders?status=pending",
+          url: "/admin/orders?q=shipping",
         },
       ],
     },
@@ -91,11 +91,11 @@ const data = {
         },
         {
           title: "approved comments",
-          url: "/admin/comments?type=approved",
+          url: "/admin/comments?q=approved",
         },
         {
           title: "rejected comments",
-          url: "/admin/comments?type=rejected",
+          url: "/admin/comments?q=rejected",
         },
       ],
     },
@@ -110,11 +110,7 @@ const data = {
         },
         {
           title: "create new discount",
-          url: "/admin/discounts?tab=create",
-        },
-        {
-          title: "create general discount",
-          url: "/admin/discounts?tab=general",
+          url: "/admin/discounts/create",
         },
       ],
     },
@@ -131,15 +127,15 @@ const data = {
         },
         {
           title: "pending",
-          url: "/admin/tickets?status=pending",
+          url: "/admin/tickets?q=pending",
         },
         {
           title: "closed",
-          url: "/admin/tickets?status=closed",
+          url: "/admin/tickets?q=closed",
         },
         {
           title: "answered",
-          url: "/admin/tickets?status=answered",
+          url: "/admin/tickets?q=answered",
         },
       ],
     },
@@ -154,7 +150,7 @@ const data = {
         },
         {
           title: "unread messages",
-          url: "/admin/messages?type=unread",
+          url: "/admin/messages?q=unread",
         },
       ],
     },
@@ -171,11 +167,11 @@ const data = {
         },
         {
           title: "banned users",
-          url: "/admin/users?status=banned",
+          url: "/admin/users?q=banned",
         },
         {
           title: "admin users",
-          url: "/admin/users?role=admin",
+          url: "/admin/users?q=admin",
         },
       ],
     },

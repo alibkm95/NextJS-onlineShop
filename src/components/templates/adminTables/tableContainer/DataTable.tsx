@@ -40,6 +40,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { Column } from "@tanstack/react-table";
 import { cn, formatDateTime } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -66,6 +67,8 @@ function DataTable({
     return dataColumnsDef;
   }, []);
   const [data, setData] = useState<typeof tableData>(tableData);
+  const params = useSearchParams();
+  const initialSelect = params.get("q");
   const table = useReactTable({
     data,
     columns,
@@ -151,7 +154,10 @@ function DataTable({
                           </div>
                           {header.column.getCanFilter() ? (
                             <div>
-                              <Filter column={header.column} />
+                              <Filter
+                                initialSelect={initialSelect}
+                                column={header.column}
+                              />
                             </div>
                           ) : null}
                         </>
@@ -245,13 +251,32 @@ function DataTable({
   );
 }
 
-function Filter({ column }: { column: Column<any, unknown> }) {
+function Filter({
+  column,
+  initialSelect,
+}: {
+  column: Column<any, unknown>;
+  initialSelect: string | null;
+}) {
   const columnFilterValue = column.getFilterValue() as any;
   const { filterVariant, selectItems } = column.columnDef.meta ?? {};
+
+  useEffect(() => {
+    if (
+      filterVariant === "select" &&
+      initialSelect &&
+      selectItems?.includes(initialSelect)
+    ) {
+      column.setFilterValue(initialSelect);
+    } else {
+      column.setFilterValue("");
+    }
+  }, [initialSelect]);
 
   switch (filterVariant) {
     case "select":
       const isDisabled = !selectItems || selectItems.length === 0;
+
       return (
         <Select
           onValueChange={(e) => {
