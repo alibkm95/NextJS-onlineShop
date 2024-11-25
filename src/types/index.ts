@@ -49,12 +49,7 @@ export type UserType = {
 export type DiscountType = {
   _id: string;
   discountCode: string;
-  isGeneral: boolean;
-  isPersonOnly: boolean;
-  user: string | UserType | null;
-  isProductOnly: boolean;
-  product: string | ProductType | null;
-  discountPercentage: number;
+  discountAmount: number;
   expiryDate: string;
   createdAt: string;
   updatedAt: string;
@@ -90,11 +85,19 @@ export type WishlistType = {
 
 export type CommentType = {
   _id: string;
-  product: string | ProductType;
-  user: string | UserType;
+  product: {
+    _id: string;
+    name: string;
+  };
+  user: {
+    _id: string;
+    fullName: string;
+    email: string;
+    avatar?: string;
+  };
   commentText: string;
-  score: number;
-  isPublished: boolean;
+  score: 1 | 2 | 3 | 4 | 5;
+  status: "approved" | "rejected" | "pending";
   createdAt: string;
   updatedAt: string;
 };

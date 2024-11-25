@@ -90,6 +90,14 @@ export const newCommentFormValidation = z.object({
     .max(5, "Maximum rating score is 5!"),
 });
 
+export const editCommentFormValidation = z.object({
+  commentText: z
+    .string()
+    .max(100, "Comment text can not be more than 100 characters!")
+    .refine((val) => val !== "", "Comment text must be provided!"),
+  status: z.enum(["approve", "reject"]),
+});
+
 export const invoiceFormValidation = z.object({
   discountCode: z.string().optional(),
   subTotal: z

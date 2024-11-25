@@ -39,7 +39,7 @@ const OrderDetailModal = () => {
           <SquareChevronRight />
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-screen h-screen max-w-7xl flex flex-col">
+      <DialogContent className="w-screen h-[100dvh] max-w-7xl flex flex-col">
         <DialogHeader>
           <DialogTitle>Order details</DialogTitle>
           <DialogDescription>53b1c579bdf3de74f76bdac9</DialogDescription>
