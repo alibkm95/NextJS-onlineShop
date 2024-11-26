@@ -53,6 +53,7 @@ export type DiscountType = {
   expiryDate: string;
   createdAt: string;
   updatedAt: string;
+  isExpired: boolean;
 };
 
 export type TicketType = {

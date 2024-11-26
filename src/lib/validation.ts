@@ -189,3 +189,19 @@ export const addNewMessageFormValidation = z.object({
     })
     .optional(),
 });
+
+export const addNewDiscountFormValidation = z.object({
+  discountCode: z
+    .string()
+    .min(8, "Discount code must be at least 8 characters!")
+    .refine((val) => val !== "", "Discount code must be provided!"),
+  discountAmount: z
+    .string()
+    .refine(
+      (val) => /^(100|[1-9][0-9]?)$/.test(val),
+      "Discount amount must be a number that represents discount percentage.(between 1-100)"
+    ),
+  expiryDate: z.date({
+    required_error: "Expiry date must be provided!",
+  }),
+});

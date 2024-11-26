@@ -109,8 +109,12 @@ const data = {
           url: "/admin/discounts",
         },
         {
-          title: "create new discount",
-          url: "/admin/discounts/create",
+          title: "active discounts",
+          url: "/admin/discounts?q=active",
+        },
+        {
+          title: "expired discounts",
+          url: "/admin/discounts?q=expired",
         },
       ],
     },
