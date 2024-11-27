@@ -60,7 +60,12 @@ export type TicketType = {
   _id: string;
   subject: string;
   status: "answered" | "closed" | "pending";
-  creator: string | UserType;
+  creator: {
+    _id: string;
+    fullName: string;
+    email: string;
+    avatar?: string;
+  };
   createdAt: string;
   updatedAt: string;
 };
