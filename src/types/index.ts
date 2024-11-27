@@ -113,8 +113,8 @@ export type MessageType = {
   senderEmail: string;
   senderName: string;
   senderAvatar: string | null;
-  subject: string | null;
   messageText: string;
+  seenByAdmin: boolean;
   createdAt: string;
   updatedAt: string;
 };

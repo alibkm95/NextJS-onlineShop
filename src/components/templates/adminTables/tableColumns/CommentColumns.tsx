@@ -1,10 +1,9 @@
 "use client";
 import CustomBadge from "@/components/modules/CustomBadge";
-import { buttonVariants } from "@/components/ui/button";
-import { cn, formatDateTime } from "@/lib/utils";
-import { CommentType, ProductType } from "@/types";
+import { formatDateTime } from "@/lib/utils";
+import { CommentType } from "@/types";
 import { ColumnDef, FilterFn } from "@tanstack/react-table";
-import { SquareArrowRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Link from "next/link";
 import CommentDetailModal from "../../adminModals/CommentDetailModal";
 

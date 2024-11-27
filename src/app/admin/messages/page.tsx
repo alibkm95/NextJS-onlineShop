@@ -1,9 +1,25 @@
-import React from 'react'
+import React from "react";
+import CustomBreadCrumb, {
+  BreadrumbPathType,
+} from "@/components/modules/CustomBreadCrumb";
+import MessagesTable from "@/components/templates/adminTables/MessagesTable";
 
 const Messages = () => {
-  return (
-    <div>Messages</div>
-  )
-}
+  const pagesPath: BreadrumbPathType[] = [
+    { page: "Dashboard", path: "/admin" },
+    { page: "Contact messages", path: null },
+  ];
 
-export default Messages
+  return (
+    <section>
+      <div className="flex items-center justify-center mb-4 md:justify-start">
+        <CustomBreadCrumb pagesPath={pagesPath} />
+      </div>
+      <div>
+        <MessagesTable />
+      </div>
+    </section>
+  );
+};
+
+export default Messages;
