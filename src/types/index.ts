@@ -38,12 +38,12 @@ export type UserType = {
   _id: string;
   fullName: string;
   email: string;
-  isBanned?: boolean;
-  isVerified?: boolean;
-  avatar?: string;
-  role?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  isBanned: boolean;
+  isVerified: boolean;
+  avatar: string | null;
+  role: "USER" | "ADMIN" | "ROOTADMIN";
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type DiscountType = {

@@ -173,10 +173,6 @@ const data = {
           title: "banned users",
           url: "/admin/users?q=banned",
         },
-        {
-          title: "admin users",
-          url: "/admin/users?q=admin",
-        },
       ],
     },
   ],
