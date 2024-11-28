@@ -46,6 +46,9 @@ export const resetFormValidation = z.object({
 
 export const ContactFormValidation = z.object({
   email: z.string().email("Invalid email address!"),
+  fullName: z
+    .string()
+    .refine((val) => val !== "", "Full name must be provided!"),
   textMessage: z
     .string()
     .max(200, "Message con not be more than 200 characters!")

@@ -15,13 +15,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { ContactFormValidation } from "@/lib/validation";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageSquareText, Send } from "lucide-react";
+import { Mail, MessageSquareText, Send, User } from "lucide-react";
 
 const ContactForm = () => {
   const form = useForm<z.infer<typeof ContactFormValidation>>({
     resolver: zodResolver(ContactFormValidation),
     defaultValues: {
       email: "",
+      fullName: "",
       textMessage: "",
     },
   });
@@ -39,6 +40,26 @@ const ContactForm = () => {
         onSubmit={form.handleSubmit(handleSendMessage)}
         className="space-y-6 w-full py-8"
       >
+        <FormField
+          control={form.control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2 ps-2">
+                <User size={18} />
+                Full name
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Your full name ..."
+                  type="text"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-destructive" />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
