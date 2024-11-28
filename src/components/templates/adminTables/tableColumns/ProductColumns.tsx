@@ -4,6 +4,7 @@ import { cn, formatDateTime } from "@/lib/utils";
 import { ProductType } from "@/types";
 import { ColumnDef, FilterFn } from "@tanstack/react-table";
 import { SquareArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export const dateRangeFilter: FilterFn<ProductType> = (
@@ -57,6 +58,28 @@ export const productColumns: ColumnDef<ProductType>[] = [
     cell: ({ row }) => <p className="text-center">{row.index + 1}</p>,
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "gallery",
+    header: () => <p className="my-1 inline-block font-bold">Image</p>,
+    cell: ({ row }) => {
+      const gallery: string[] = row.getValue("gallery");
+      return (
+        <div className="w-16">
+          <Image
+            src={gallery[0] || "/images/product-fallback.png"}
+            width={160}
+            height={90}
+            alt="productImage"
+            className="w-full max-w-full rounded"
+          />
+        </div>
+      );
+    },
+    enableSorting: false,
+    meta: {
+      filterVariant: "none",
+    },
   },
   {
     accessorKey: "name",

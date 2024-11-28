@@ -369,7 +369,7 @@ function Filter({
                 className="me-1 mb-1 h-8 bg-background min-w-24"
               >
                 <CalendarIcon />
-                {endDate ? formatDateTime(startDate).dateOnly : "End Date"}
+                {endDate ? formatDateTime(endDate).dateOnly : "End Date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="end">
@@ -396,7 +396,7 @@ function Filter({
         />
       );
     case "none":
-      return null;
+      return <div className="w-full min-w-24 me-1 mb-1 h-8" />;
     default:
       return null;
   }
