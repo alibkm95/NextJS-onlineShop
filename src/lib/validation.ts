@@ -205,3 +205,31 @@ export const addNewDiscountFormValidation = z.object({
     required_error: "Expiry date must be provided!",
   }),
 });
+
+export const autoDiscountFormValidation = z.object({
+  isActive: z.boolean().default(false),
+  minAmount: z
+    .string({
+      required_error: "Minimum user payment amount must be provided!",
+    })
+    .refine(
+      (val) => /^-?\d+(\.\d+)?$/.test(val),
+      "Minimum user payment amount must be in numerical form."
+    ),
+  discountAmount: z
+    .string({
+      required_error: "Discount amount must be provided!",
+    })
+    .refine(
+      (val) => /^(100|[1-9][0-9]?)$/.test(val),
+      "Discount amount must be a number that represents discount percentage.(between 1-100)"
+    ),
+  validityPeriod: z
+    .string({
+      required_error: "Validity period must be provided!",
+    })
+    .refine(
+      (val) => /^(30|[1-2]?\d)$/.test(val),
+      "Validity period must be in numerical format max 30 days, for example: 15, which specifies that the discount code will be valid for 15 days from the date of creation."
+    ),
+});

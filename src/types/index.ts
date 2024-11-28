@@ -124,5 +124,7 @@ export type TestimonialType = {
   textContent: string;
   senderName: string;
   senderEmail: string;
-  senderAvatar: string | null;
+  senderAvatar?: string;
+  createdAt: string;
+  updatedAt: string;
 };
