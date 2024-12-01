@@ -264,3 +264,11 @@ export const ProductFormValidation = z.object({
   customPart: z.boolean().default(false),
   isPublished: z.boolean().default(true),
 });
+
+export const MessageReplyFormValidation = z.object({
+  email: z.string().email(),
+  messageContent: z
+    .string()
+    .max(1000, "message can not be more than 1000 characters!")
+    .refine((val) => val !== "", "message content must be provided!"),
+});
