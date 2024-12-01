@@ -29,7 +29,7 @@ const Message: React.FC<MessageProps> = ({ admin }) => {
         </div>
         <div className="p-2 md:p-3 lg:p-4 bg-secondary rounded-md mt-2 relative w-full space-y-4 lg:w-[80%]">
           <div
-            className={`absolute bg-secondary w-3 h-3 top-[-5px] rotate-45 z-[-1] ${
+            className={`absolute bg-secondary w-3 h-3 top-[-5px] rotate-45 z-0 ${
               admin ? "right-5" : "left-5"
             }`}
           />
