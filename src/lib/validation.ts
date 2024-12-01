@@ -236,3 +236,31 @@ export const autoDiscountFormValidation = z.object({
       "Validity period must be in numerical format max 30 days, for example: 15, which specifies that the discount code will be valid for 15 days from the date of creation."
     ),
 });
+
+export const ProductFormValidation = z.object({
+  name: z
+    .string()
+    .refine((val) => val !== "", "Product name must be provided!"),
+  price: z
+    .string()
+    .refine(
+      (val) => /^(0|[1-9]\d*)(\.\d+)?$/.test(val),
+      "Price must be provided in correct format!"
+    ),
+  inventory: z
+    .string()
+    .refine(
+      (val) => /^(0|[1-9]\d*)$/.test(val),
+      "Product inventory must be provided in numerical format!"
+    ),
+  options: z.string().array().nonempty({
+    message: "Provide at least one option for Product!",
+  }),
+  description: z
+    .string()
+    .min(50, "Product description must be at least 50 characters")
+    .max(1000, "product description mut be max 1000 characters"),
+  category: z.enum(["car", "bike", "scooter"]),
+  customPart: z.boolean().default(false),
+  isPublished: z.boolean().default(true),
+});
