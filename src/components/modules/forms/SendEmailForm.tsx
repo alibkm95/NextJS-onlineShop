@@ -9,23 +9,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageReplyFormValidation } from "@/lib/validation";
+import { SendEmailFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MessageSquareReply, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const MessageReplyForm = () => {
-  const form = useForm<z.infer<typeof MessageReplyFormValidation>>({
-    resolver: zodResolver(MessageReplyFormValidation),
+interface SendEmailFormProps {
+  email: string;
+  label: string;
+}
+
+const SendEmailForm = ({ email, label }: SendEmailFormProps) => {
+  const form = useForm<z.infer<typeof SendEmailFormValidation>>({
+    resolver: zodResolver(SendEmailFormValidation),
     defaultValues: {
       email: "",
       messageContent: "",
     },
   });
 
-  const handleReplyMessage = async (
-    values: z.infer<typeof MessageReplyFormValidation>
+  const handleSendEmail = async (
+    values: z.infer<typeof SendEmailFormValidation>
   ) => {
     console.log(values);
     // handle form submition.
@@ -34,7 +39,7 @@ const MessageReplyForm = () => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleReplyMessage)}
+        onSubmit={form.handleSubmit(handleSendEmail)}
         className="flex flex-col gap-4 justify-between w-full min-h-96"
       >
         <FormField
@@ -43,8 +48,8 @@ const MessageReplyForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="flex items-center gap-2 ps-2">
-                <MessageSquareReply size={18} />
-                Reply message
+                <Mail size={18} />
+                {label}
               </FormLabel>
               <FormControl>
                 <Textarea
@@ -62,11 +67,11 @@ const MessageReplyForm = () => {
           className="bg-emerald-600 hover:bg-emerald-700 w-max flex ms-auto"
         >
           <Send />
-          Send reply
+          Send
         </Button>
       </form>
     </Form>
   );
 };
 
-export default MessageReplyForm;
+export default SendEmailForm;

@@ -4,7 +4,7 @@ import CustomBreadCrumb, {
 } from "@/components/modules/CustomBreadCrumb";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CalendarClock, MailCheck } from "lucide-react";
-import MessageReplyForm from "@/components/modules/forms/MessageReplyForm";
+import SendEmailForm from "@/components/modules/forms/SendEmailForm";
 
 const Message = () => {
   const pagesPath: BreadrumbPathType[] = [
@@ -58,7 +58,7 @@ const Message = () => {
           </div>
         </div>
         <div className="border rounded-md shadow p-2 h-full md:px-3 md:py-4">
-          <MessageReplyForm />
+          <SendEmailForm email="example@mail.com" label="Reply email" />
         </div>
       </div>
     </section>

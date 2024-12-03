@@ -265,7 +265,7 @@ export const ProductFormValidation = z.object({
   isPublished: z.boolean().default(true),
 });
 
-export const MessageReplyFormValidation = z.object({
+export const SendEmailFormValidation = z.object({
   email: z.string().email(),
   messageContent: z
     .string()
