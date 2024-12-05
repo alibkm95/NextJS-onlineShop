@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/modules/navbar/Navbar";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import Footer from "@/components/modules/footer/Footer";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,6 +41,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <Toaster position="top-left" />
         </ThemeProvider>
       </body>
     </html>
