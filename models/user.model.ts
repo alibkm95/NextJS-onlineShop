@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
+      unique: [true, "provided email is already in use!"],
+      index: true,
       required: [true, "user email must be provided"],
     },
     avatar: {
@@ -47,4 +49,4 @@ const UserSchema = new mongoose.Schema(
 
 const model = mongoose.models.User || mongoose.model("User", UserSchema);
 
-export default model
+export default model;

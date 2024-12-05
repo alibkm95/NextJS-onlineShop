@@ -12,5 +12,19 @@ export const emailValidation = z.object({
 });
 
 export const registerValidation = z.object({
-
-})
+  fullName: z
+    .string()
+    .min(3, "Name must be at least 3 characters!")
+    .max(50, "Name must be at most 50 characters!")
+    .trim()
+    .toLowerCase()
+    .refine((val) => val !== "", "Full name must be provided!"),
+  email: z.string().email("Invalid email address!").trim().toLowerCase(),
+  password: z
+    .string()
+    .min(8, "password must be at least 8 characters")
+    .refine(
+      (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password),
+      "Password must contain at least one upper case, one lower case and one digit!"
+    ),
+});
