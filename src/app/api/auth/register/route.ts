@@ -3,8 +3,10 @@ import connectToDB from "@/configs/DB";
 import UserModel from "@/models/user.model";
 import { z } from "zod";
 import { registerValidation } from "@/lib/requestValidation";
-import { generateAccessToken, hashPassword } from "@/lib/auth";
+import { generateAccessToken, hashData, verifyHashedData } from "@/lib/auth";
 import { cookies } from "next/headers";
+import crypto from "crypto";
+import { sendEmail } from "@/lib/sendEmail";
 
 export async function POST(req: NextRequest) {
   connectToDB();
@@ -22,22 +24,26 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
-    const hashedPassword = await hashPassword(password);
-    const accessToken = generateAccessToken({ email });
+    const hashedPassword = await hashData(password);
     const isFirstUser: boolean = (await UserModel.countDocuments()) === 0;
+    const buffer = crypto.randomBytes(3);
+    const otp = (buffer.readUIntBE(0, 3) % 1000000).toString().padStart(6, "0");
+    const verificationCode = await hashData(otp);
     await UserModel.create({
       fullName,
       email,
       password: hashedPassword,
       role: isFirstUser ? "ROOTADMIN" : "USER",
+      verificationCode,
+      verificationCodeExpirationDate: new Date(Date.now() + 10 * 60 * 1000),
     });
-    cookies().set({
-      name: "accessToken",
-      value: accessToken,
-      expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-      httpOnly: true,
-      path: "/",
-    });
+    await sendEmail(
+      email,
+      "Verification code",
+      `
+      <p>your verification code is: ${otp}</p>
+      `
+    );
     return Response.json(
       {
         success: true,
@@ -61,5 +67,100 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  connectToDB();
+  try {
+    const { email, otp } = await req.json();
+    if (!email || !otp) {
+      return Response.json(
+        {
+          success: false,
+          msg: "Email and OTP-code must be provided!",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return Response.json(
+        {
+          success: false,
+          msg: "User not found!",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+    if (user.isVerified) {
+      return Response.json(
+        {
+          success: false,
+          msg: "User already verified!",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+    const isOTPValid = await verifyHashedData(otp, user.verificationCode);
+    if (!isOTPValid) {
+      return Response.json(
+        {
+          success: false,
+          msg: "Invalid OTP-code!",
+        },
+        {
+          status: 401,
+        }
+      );
+    }
+    const isOTPExpired =
+      new Date(Date.now()) > user.verificationCodeExpirationDate;
+    if (isOTPExpired) {
+      return Response.json(
+        {
+          success: false,
+          msg: "OTP-code is expired!",
+        },
+        {
+          status: 406,
+        }
+      );
+    }
+    const accessToken = generateAccessToken({ email: user.email });
+    user.isVerified = true;
+    user.verifiedIn = Date.now();
+    user.verificationCode = null;
+    await user.save();
+    await sendEmail(
+      email,
+      "Verification success",
+      `
+      <p>wellcome</p>
+      `
+    );
+    cookies().set({
+      name: "accessToken",
+      value: accessToken,
+      expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      path: "/",
+    });
+    return Response.json(
+      { success: true, msg: "Verification compeleted successfully." },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log("Unknown error:", error);
+    return Response.json(
+      { success: false, msg: "Unknown error" },
+      { status: 500 }
+    );
   }
 }

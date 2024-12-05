@@ -1,18 +1,18 @@
 import { hash, compare } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 
-export const hashPassword: (passowrd: string) => Promise<string> = async (
-  password
+export const hashData: (data: string) => Promise<string> = async (
+  data
 ) => {
-  const hashedPassword = await hash(password, 12);
+  const hashedPassword = await hash(data, 12);
   return hashedPassword;
 };
 
-export const verifyPassword: (
-  password: string,
-  hashedPassword: string
-) => Promise<boolean> = async (password, hashedPassword) => {
-  const isValid = await compare(password, hashedPassword);
+export const verifyHashedData: (
+  data: string,
+  hashedData: string
+) => Promise<boolean> = async (data, hashedData) => {
+  const isValid = await compare(data, hashedData);
   return isValid;
 };
 
