@@ -1,9 +1,7 @@
 import { hash, compare } from "bcryptjs";
-import { sign, verify } from "jsonwebtoken";
+import { JwtPayload, sign, verify } from "jsonwebtoken";
 
-export const hashData: (data: string) => Promise<string> = async (
-  data
-) => {
+export const hashData: (data: string) => Promise<string> = async (data) => {
   const hashedPassword = await hash(data, 12);
   return hashedPassword;
 };
@@ -23,7 +21,9 @@ export const generateAccessToken: (data: {}) => string = (data) => {
   return token;
 };
 
-export const verifyAccessToken: (token: string) => {} | null = (token) => {
+export const verifyAccessToken: (
+  token: string
+) => string | JwtPayload | null = (token) => {
   try {
     const tokenPayload = verify(
       token,
@@ -35,10 +35,3 @@ export const verifyAccessToken: (token: string) => {} | null = (token) => {
     return null;
   }
 };
-
-// const generateRefreshToken = (data) => {
-//   const token = sign({ ...data }, process.env.RefreshTokenSecretKey, {
-//     expiresIn: "15d",
-//   });
-//   return token;
-// };

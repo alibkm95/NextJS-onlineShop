@@ -7,6 +7,10 @@ import { generateAccessToken, hashData, verifyHashedData } from "@/lib/auth";
 import { cookies } from "next/headers";
 import crypto from "crypto";
 import { sendEmail } from "@/lib/sendEmail";
+import {
+  otpEmailTemplate,
+  wellcomeEmailTemplate,
+} from "@/components/templates/emailHtmlTemplates";
 
 export async function POST(req: NextRequest) {
   connectToDB();
@@ -40,9 +44,7 @@ export async function POST(req: NextRequest) {
     await sendEmail(
       email,
       "Verification code",
-      `
-      <p>your verification code is: ${otp}</p>
-      `
+      otpEmailTemplate(otp, fullName)
     );
     return Response.json(
       {
@@ -57,7 +59,7 @@ export async function POST(req: NextRequest) {
     if (error instanceof z.ZodError) {
       console.log("Validation error:", error.issues);
       return Response.json(
-        { success: false, msg: "Validation error", errors: error.issues },
+        { success: false, msg: "Validation error" },
         { status: 400 }
       );
     } else {
@@ -78,7 +80,7 @@ export async function PATCH(req: NextRequest) {
       return Response.json(
         {
           success: false,
-          msg: "Email and OTP-code must be provided!",
+          msg: "Credentials are not valid!",
         },
         {
           status: 400,
@@ -141,9 +143,7 @@ export async function PATCH(req: NextRequest) {
     await sendEmail(
       email,
       "Verification success",
-      `
-      <p>wellcome</p>
-      `
+      wellcomeEmailTemplate(user.fullName)
     );
     cookies().set({
       name: "accessToken",
