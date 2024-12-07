@@ -28,6 +28,17 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "password must be provided!"],
     },
+    phone: {
+      type: String,
+      default: null,
+    },
+    address: {
+      country: { type: String, default: null },
+      city: { type: String, default: null },
+      street: { type: String, default: null },
+      number: { type: String, default: null },
+      postalCode: { type: String, default: null },
+    },
     isVerified: {
       type: Boolean,
       default: false,

@@ -20,6 +20,3 @@ export const authenticateUser = async () => {
   return user;
 };
 
-export const authorizePermissions = async () => {
-  //implement
-};
