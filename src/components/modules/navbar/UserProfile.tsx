@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -7,7 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { RootState } from "@/store/store";
 import {
   CircleUserRound,
   Heart,
@@ -19,8 +22,13 @@ import {
   UserRoundPlus,
 } from "lucide-react";
 import Link from "next/link";
-const user = true;
+import { useSelector } from "react-redux";
+
 const UserProfile = () => {
+  const { user, loading, error } = useSelector(
+    (state: RootState) => state.authUser
+  );
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="bg-transparent relative">
@@ -29,7 +37,16 @@ const UserProfile = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="space-y-2 w-full max-w-60">
-        {user ? (
+        {loading && !user && (
+          <div className="flex items-center gap-2 p-2 w-40">
+            <Skeleton className="h-12 w-12 rounded-full shrink-0" />
+            <div className="space-y-2 w-full">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-[60%]" />
+            </div>
+          </div>
+        )}
+        {user && !loading && (
           <>
             <DropdownMenuItem
               asChild
@@ -120,7 +137,8 @@ const UserProfile = () => {
               </Button>
             </DropdownMenuItem>
           </>
-        ) : (
+        )}
+        {!user && !loading && (
           <>
             <DropdownMenuItem asChild className="w-full cursor-pointer">
               <Link
