@@ -1,7 +1,8 @@
+import { UserType } from "@/types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 interface AuthState {
-  user: null | object;
+  user: null | UserType;
   loading: boolean;
   error: string | null;
 }
@@ -20,22 +21,6 @@ export const authUser = createAsyncThunk("authUser/getMe", async () => {
   }
   return data.user;
 });
-
-// export const loginUser = createAsyncThunk(
-//   "authUser/login",
-//   async (email, password) => {
-//     const res = await fetch(`/api/auth/login`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ email, password }),
-//     });
-//     const data = await res.json();
-//     if (res.status !== 200) {
-//       throw new Error(data.msg);
-//     }
-//     return data.user;
-//   }
-// );
 
 const authUserSlice = createSlice({
   name: "authUser",

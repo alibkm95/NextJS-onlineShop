@@ -42,6 +42,14 @@ export type UserType = {
   isVerified: boolean;
   avatar: string | null;
   role: "USER" | "ADMIN" | "ROOTADMIN";
+  phone?: string | null;
+  address?: {
+    country?: string | null;
+    city?: string | null;
+    street?: string | null;
+    number?: string | null;
+    postalCode?: string | null;
+  };
   createdAt: string;
   updatedAt: string;
 };

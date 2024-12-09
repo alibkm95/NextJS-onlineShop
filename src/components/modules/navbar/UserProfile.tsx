@@ -10,7 +10,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { RootState } from "@/store/store";
+import { authUser } from "@/store/features/AuthUserSlice";
+import { AppDispatch, RootState } from "@/store/store";
 import {
   CircleUserRound,
   Heart,
@@ -22,12 +23,18 @@ import {
   UserRoundPlus,
 } from "lucide-react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserProfile = () => {
-  const { user, loading, error } = useSelector(
-    (state: RootState) => state.authUser
-  );
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, loading } = useSelector((state: RootState) => state.authUser);
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(authUser());
+    }
+  }, []);
 
   return (
     <DropdownMenu>
@@ -61,14 +68,16 @@ const UserProfile = () => {
               >
                 <div className="flex items-center gap-4">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn." />
+                    <AvatarImage src={`/uploads/users/${user.avatar}`} />
                     <AvatarFallback className="bg-primary/50 text-white">
-                      CN
+                      {`${user.fullName[0].toUpperCase()}${user.fullName[1].toUpperCase()}`}
                     </AvatarFallback>
                   </Avatar>
                   <div className="">
-                    <p className="font-semibold">username</p>
-                    <span>user@mail.com</span>
+                    <p className="font-semibold line-clamp-1">
+                      {user.fullName}
+                    </p>
+                    <span className="line-clamp-1">{user.email}</span>
                   </div>
                 </div>
               </Link>

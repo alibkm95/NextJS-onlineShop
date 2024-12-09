@@ -3,12 +3,12 @@ import UserModel from "@/models/user.model";
 import connectToDB from "@/configs/DB";
 import { verifyAccessToken } from "./auth";
 
-export const authenticateUser = async () => {
+export const authenticateUser = async (token: string | undefined) => {
   connectToDB();
-  const token = await cookies().get("accessToken");
+  const accessToken = token || cookies().get("accessToken")?.value;
   let user = null;
-  if (token) {
-    const tokenPayload = verifyAccessToken(token.value);
+  if (accessToken) {
+    const tokenPayload = verifyAccessToken(accessToken);
     if (tokenPayload && typeof tokenPayload !== "string") {
       user = await UserModel.findOne({ email: tokenPayload.email })
         .select(
@@ -19,4 +19,3 @@ export const authenticateUser = async () => {
   }
   return user;
 };
-

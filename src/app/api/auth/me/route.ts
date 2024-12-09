@@ -3,7 +3,8 @@ import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = await authenticateUser();
+    const token = req.headers.get("Authorization")?.split(" ")[1];
+    const user = await authenticateUser(token);
     if (!user) {
       return Response.json(
         { success: false, msg: "Unauthorized!" },

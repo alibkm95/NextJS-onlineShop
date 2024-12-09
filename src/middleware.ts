@@ -2,21 +2,31 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const protectedRoutes = ["/admin", "/panel", "/cart", "/support"];
-const authRoute = "/auth";
 
-export async function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const { nextUrl } = request;
-  const res = await fetch(`${nextUrl.origin}/api/auth/me`);
-  const user = await res.json();
+  const token = request.cookies.get("accessToken")?.value;
+  let user = null;
 
-  if (user && user.isLoggedIn) {
-    if (nextUrl.pathname === authRoute) {
-      return NextResponse.redirect(new URL("/panel", request.url));
+  if (token) {
+    const res = await fetch(`${nextUrl.origin}/api/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      user = data.user;
     }
-  } else {
-    if (protectedRoutes.includes(nextUrl.pathname)) {
-      return NextResponse.redirect(new URL(`${authRoute}/login`, request.url));
-    }
+  }
+
+  if (user && nextUrl.pathname.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/panel", request.url));
+  }
+
+  if (!user && protectedRoutes.includes(nextUrl.pathname)) {
+    return NextResponse.redirect(new URL(`/auth/login`, request.url));
   }
 
   return NextResponse.next();

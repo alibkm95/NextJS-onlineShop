@@ -16,8 +16,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { LockKeyhole, LogIn, Mail, UserRoundPlus } from "lucide-react";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { authUser } from "@/store/features/AuthUserSlice";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const form = useForm<z.infer<typeof LoginFormValidation>>({
     resolver: zodResolver(LoginFormValidation),
     defaultValues: {
@@ -27,8 +34,18 @@ const LoginForm = () => {
   });
 
   const handleLogin = async (values: z.infer<typeof LoginFormValidation>) => {
-    console.log(values);
-    // handle form submition.
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (res.status !== 200) {
+      return toast.error(data.msg);
+    }
+    await dispatch(authUser());
+    toast.success(data.msg);
+    return router.replace("/panel");
   };
 
   return (
