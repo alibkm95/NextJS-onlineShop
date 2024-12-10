@@ -28,3 +28,18 @@ export const registerValidation = z.object({
       "Password must contain at least one upper case, one lower case and one digit!"
     ),
 });
+
+export const resetValidation = z.object({
+  email: z.string({ required_error: "Email must be provided!" }).email(),
+  otpCode: z
+    .string({ required_error: "OTP-Code must be provided!" })
+    .min(6, "OTP-Code must be a 6-digit number!")
+    .refine((val) => val !== "", "OTP-Code must be provided!"),
+  password: z
+    .string({ required_error: "New password must be provided!" })
+    .min(8, "New password must be at least 8 characters")
+    .refine(
+      (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password),
+      "New password must contain at least one upper case, one lower case and one digit!"
+    ),
+});
