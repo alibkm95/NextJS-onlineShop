@@ -83,10 +83,19 @@ const config: Config = {
             height: "0",
           },
         },
+        "spin": {
+          from: {
+            transform: "rotate(0deg)",
+          },
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'spin': 'spin 1.5s linear infinite',
       },
     },
   },

@@ -1,7 +1,7 @@
 "use client";
 import { LoginFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -21,8 +21,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { authUser } from "@/store/features/AuthUserSlice";
 import { useRouter } from "next/navigation";
+import Spinner from "../Spinner";
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const form = useForm<z.infer<typeof LoginFormValidation>>({
@@ -34,6 +36,7 @@ const LoginForm = () => {
   });
 
   const handleLogin = async (values: z.infer<typeof LoginFormValidation>) => {
+    setLoading(true);
     const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,10 +44,13 @@ const LoginForm = () => {
     });
     const data = await res.json();
     if (res.status !== 200) {
+      setLoading(false);
       return toast.error(data.msg);
     }
     await dispatch(authUser());
     toast.success(data.msg);
+    form.reset();
+    setLoading(false);
     return router.replace("/panel");
   };
 
@@ -66,6 +72,7 @@ const LoginForm = () => {
               <FormControl>
                 <Input
                   placeholder="Your email address ..."
+                  disabled={loading}
                   type="email"
                   {...field}
                 />
@@ -86,6 +93,7 @@ const LoginForm = () => {
               <FormControl>
                 <Input
                   placeholder="Your Password ..."
+                  disabled={loading}
                   type="password"
                   {...field}
                 />
@@ -114,9 +122,10 @@ const LoginForm = () => {
         </p>
         <Button
           type="submit"
+          disabled={loading}
           className="bg-emerald-600 hover:bg-emerald-700 w-max ms-auto flex"
         >
-          <LogIn />
+          {loading ? <Spinner /> : <LogIn />}
           Login
         </Button>
       </form>

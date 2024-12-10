@@ -1,6 +1,6 @@
 "use client";
 import { RegisterFormValidation } from "@/lib/validation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,8 +17,13 @@ import { Input } from "@/components/ui/input";
 import { LockKeyhole, Mail, UserRoundPen, UserRoundPlus } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import Spinner from "../Spinner";
 
 const RegisterForm = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof RegisterFormValidation>>({
     resolver: zodResolver(RegisterFormValidation),
     defaultValues: {
@@ -32,8 +37,21 @@ const RegisterForm = () => {
   const handleRegister = async (
     values: z.infer<typeof RegisterFormValidation>
   ) => {
-    console.log(values);
-    // handle form submition.
+    setLoading(true);
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (res.status !== 201) {
+      setLoading(false);
+      return toast.error(data.msg);
+    }
+    toast.success(data.msg);
+    form.reset();
+    setLoading(false);
+    return router.replace(`/auth/verify?user=${values.email}`);
   };
 
   return (
@@ -54,6 +72,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input
                   placeholder="Your full name ..."
+                  disabled={loading}
                   type="text"
                   {...field}
                 />
@@ -74,6 +93,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input
                   placeholder="Your email address ..."
+                  disabled={loading}
                   type="email"
                   {...field}
                 />
@@ -94,6 +114,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input
                   placeholder="Your Password ..."
+                  disabled={loading}
                   type="password"
                   {...field}
                 />
@@ -111,6 +132,7 @@ const RegisterForm = () => {
                 <FormControl>
                   <Checkbox
                     checked={field.value}
+                    disabled={loading}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
@@ -133,9 +155,10 @@ const RegisterForm = () => {
         </p>
         <Button
           type="submit"
+          disabled={loading}
           className="bg-emerald-600 hover:bg-emerald-700 w-max ms-auto flex"
         >
-          <UserRoundPlus />
+          {loading ? <Spinner /> : <UserRoundPlus />}
           Register
         </Button>
       </form>

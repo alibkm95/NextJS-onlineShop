@@ -1,7 +1,7 @@
 "use client";
 import { VerifyFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -19,8 +19,19 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
+import { authUser } from "@/store/features/AuthUserSlice";
+import Spinner from "../Spinner";
 
 const VerifyAccountForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const params = useSearchParams();
+  const email = params.get("user");
+  const [loading, setLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof VerifyFormValidation>>({
     resolver: zodResolver(VerifyFormValidation),
     defaultValues: {
@@ -31,8 +42,22 @@ const VerifyAccountForm = () => {
   const handleVerification = async (
     values: z.infer<typeof VerifyFormValidation>
   ) => {
-    console.log(values);
-    // handle form submition.
+    setLoading(true);
+    const res = await fetch("/api/auth/register", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ otp: values.otpCode, email }),
+    });
+    const data = await res.json();
+    if (res.status !== 200) {
+      setLoading(false);
+      return toast.error(data.msg);
+    }
+    await dispatch(authUser());
+    toast.success(data.msg);
+    form.reset();
+    setLoading(false);
+    return router.replace("/panel");
   };
 
   return (
@@ -54,7 +79,7 @@ const VerifyAccountForm = () => {
                 OTP-Code
               </FormLabel>
               <FormControl>
-                <InputOTP maxLength={6} {...field}>
+                <InputOTP maxLength={6} {...field} disabled={loading}>
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                   </InputOTPGroup>
@@ -84,9 +109,10 @@ const VerifyAccountForm = () => {
         </span>
         <Button
           type="submit"
+          disabled={loading}
           className="bg-emerald-600 hover:bg-emerald-700 w-max ms-auto"
         >
-          <ShieldCheck />
+          {loading ? <Spinner /> : <ShieldCheck />}
           Verify
         </Button>
       </form>

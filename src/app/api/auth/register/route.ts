@@ -41,15 +41,19 @@ export async function POST(req: NextRequest) {
       verificationCode,
       verificationCodeExpirationDate: new Date(Date.now() + 10 * 60 * 1000),
     });
-    await sendEmail(
-      email,
-      "Verification code",
-      otpEmailTemplate(otp, fullName)
-    );
+    try {
+      await sendEmail(
+        email,
+        "Verification code",
+        otpEmailTemplate(otp, fullName)
+      );
+    } catch (error) {
+      console.log(error);
+    }
     return Response.json(
       {
         success: true,
-        msg: "User registered successfully.",
+        msg: "Registration success. Please verify your account.",
       },
       {
         status: 201,
@@ -140,11 +144,6 @@ export async function PATCH(req: NextRequest) {
     user.verifiedIn = Date.now();
     user.verificationCode = null;
     await user.save();
-    await sendEmail(
-      email,
-      "Verification success",
-      wellcomeEmailTemplate(user.fullName)
-    );
     cookies().set({
       name: "accessToken",
       value: accessToken,
@@ -152,6 +151,15 @@ export async function PATCH(req: NextRequest) {
       httpOnly: true,
       path: "/",
     });
+    try {
+      await sendEmail(
+        email,
+        "Verification success",
+        wellcomeEmailTemplate(user.fullName)
+      );
+    } catch (error) {
+      console.log(error);
+    }
     return Response.json(
       { success: true, msg: "Verification compeleted successfully." },
       { status: 200 }
