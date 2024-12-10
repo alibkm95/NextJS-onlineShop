@@ -10,7 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { authUser } from "@/store/features/AuthUserSlice";
+import { authUser, logout } from "@/store/features/AuthUserSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import {
   CircleUserRound,
@@ -25,8 +25,12 @@ import {
 import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../Spinner";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const UserProfile = () => {
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading } = useSelector((state: RootState) => state.authUser);
 
@@ -35,6 +39,21 @@ const UserProfile = () => {
       dispatch(authUser());
     }
   }, []);
+
+  const logoutUser: () => void = () => {
+    const toastId = toast.loading("Logging out. Please wait ...");
+    fetch("/api/auth/logout", {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success("Logout success! Redirecting to home page.");
+        dispatch(logout());
+        router.replace("/");
+      })
+      .catch((error) => toast.error("Error logging out. Please try later."))
+      .finally(() => toast.dismiss(toastId));
+  };
 
   return (
     <DropdownMenu>
@@ -53,7 +72,7 @@ const UserProfile = () => {
             </div>
           </div>
         )}
-        {user && !loading && (
+        {user && (
           <>
             <DropdownMenuItem
               asChild
@@ -141,8 +160,13 @@ const UserProfile = () => {
             </DropdownMenuItem>
             <Separator />
             <DropdownMenuItem className="w-full cursor-pointer">
-              <Button variant="destructive" className="justify-start w-full">
-                <LogOut /> Logout
+              <Button
+                variant="destructive"
+                className="justify-start w-full"
+                onClick={logoutUser}
+              >
+                {loading ? <Spinner /> : <LogOut />}
+                Logout
               </Button>
             </DropdownMenuItem>
           </>
