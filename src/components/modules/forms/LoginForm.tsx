@@ -45,6 +45,11 @@ const LoginForm = () => {
     const data = await res.json();
     if (res.status !== 200) {
       setLoading(false);
+      if (data.redirectUrl) {
+        form.reset();
+        toast.error(data.msg);
+        return router.replace(data.redirectUrl);
+      }
       return toast.error(data.msg);
     }
     await dispatch(authUser());

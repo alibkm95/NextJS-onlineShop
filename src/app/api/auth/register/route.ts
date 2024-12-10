@@ -41,15 +41,11 @@ export async function POST(req: NextRequest) {
       verificationCode,
       verificationCodeExpirationDate: new Date(Date.now() + 10 * 60 * 1000),
     });
-    try {
-      await sendEmail(
-        email,
-        "Verification code",
-        otpEmailTemplate(otp, fullName)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    await sendEmail(
+      email,
+      "Verification code",
+      otpEmailTemplate(otp, fullName)
+    );
     return Response.json(
       {
         success: true,
@@ -151,15 +147,11 @@ export async function PATCH(req: NextRequest) {
       httpOnly: true,
       path: "/",
     });
-    try {
-      await sendEmail(
-        email,
-        "Verification success",
-        wellcomeEmailTemplate(user.fullName)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    await sendEmail(
+      email,
+      "Verification success",
+      wellcomeEmailTemplate(user.fullName)
+    );
     return Response.json(
       { success: true, msg: "Verification compeleted successfully." },
       { status: 200 }

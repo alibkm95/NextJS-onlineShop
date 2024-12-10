@@ -43,15 +43,11 @@ export async function POST(req: NextRequest) {
       Date.now() + 10 * 60 * 1000
     );
     await user.save();
-    try {
-      await sendEmail(
-        user.email,
-        "Reset password verification code",
-        otpResetEmailTemplate(otp, user.fullName)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    await sendEmail(
+      user.email,
+      "Reset password verification code",
+      otpResetEmailTemplate(otp, user.fullName)
+    );
     return Response.json(
       {
         success: true,
@@ -113,19 +109,20 @@ export async function PATCH(req: NextRequest) {
         }
       );
     }
+    if (!user.isVerified) {
+      user.isVerified = true;
+      user.verifiedIn = Date.now();
+      await user.save();
+    }
     const accessToken = generateAccessToken({ email: user.email });
     user.password = await hashData(password);
     user.resetPasswordCode = null;
     await user.save();
-    try {
-      await sendEmail(
-        email,
-        "Reset password success",
-        resetEmailTemplate(user.fullName)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    await sendEmail(
+      email,
+      "Reset password success",
+      resetEmailTemplate(user.fullName)
+    );
     cookies().set({
       name: "accessToken",
       value: accessToken,

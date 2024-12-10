@@ -1,8 +1,11 @@
 import { NextRequest } from "next/server";
 import connectToDB from "@/configs/DB";
 import UserModel from "@/models/user.model";
-import { generateAccessToken, verifyHashedData } from "@/lib/auth";
+import { generateAccessToken, hashData, verifyHashedData } from "@/lib/auth";
 import { cookies } from "next/headers";
+import crypto from "crypto";
+import { sendEmail } from "@/lib/sendEmail";
+import { otpEmailTemplate } from "@/components/templates/emailHtmlTemplates";
 
 export async function POST(req: NextRequest) {
   connectToDB();
@@ -39,6 +42,31 @@ export async function POST(req: NextRequest) {
         {
           status: 401,
         }
+      );
+    }
+    if (!user.isVerified) {
+      const buffer = crypto.randomBytes(3);
+      const otp = (buffer.readUIntBE(0, 3) % 1000000)
+        .toString()
+        .padStart(6, "0");
+      const verificationCode = await hashData(otp);
+      user.verificationCode = verificationCode;
+      user.verificationCodeExpirationDate = new Date(
+        Date.now() + 10 * 60 * 1000
+      );
+      await user.save();
+      await sendEmail(
+        email,
+        "Verification code",
+        otpEmailTemplate(otp, user.fullName)
+      );
+      return Response.json(
+        {
+          success: false,
+          msg: "Please verify your account first! Redirecting to account verification page.",
+          redirectUrl: `/auth/verify?user=${encodeURIComponent(user.email)}`,
+        },
+        { status: 403 }
       );
     }
     const accessToken = generateAccessToken({ email: user.email });

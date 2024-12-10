@@ -51,7 +51,7 @@ const RegisterForm = () => {
     toast.success(data.msg);
     form.reset();
     setLoading(false);
-    return router.replace(`/auth/verify?user=${values.email}`);
+    return router.replace(`/auth/verify?user=${encodeURIComponent(values.email)}`);
   };
 
   return (
