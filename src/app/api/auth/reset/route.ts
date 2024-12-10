@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   connectToDB();
   try {
     const { email } = await req.json();
-    if(!email) {
+    if (!email) {
       return Response.json(
         {
           success: false,
@@ -38,14 +38,20 @@ export async function POST(req: NextRequest) {
     const buffer = crypto.randomBytes(3);
     const otp = (buffer.readUIntBE(0, 3) % 1000000).toString().padStart(6, "0");
     const resetPasswordCode = await hashData(otp);
-    user.resetPasswordCode = resetPasswordCode
-    user.resetPasswordCodeExpirationDate = new Date(Date.now() + 10 * 60 * 1000)
-    await user.save()
-    await sendEmail(
-      user.email,
-      "Reset password verification code",
-      otpResetEmailTemplate(otp, user.fullName)
+    user.resetPasswordCode = resetPasswordCode;
+    user.resetPasswordCodeExpirationDate = new Date(
+      Date.now() + 10 * 60 * 1000
     );
+    await user.save();
+    try {
+      await sendEmail(
+        user.email,
+        "Reset password verification code",
+        otpResetEmailTemplate(otp, user.fullName)
+      );
+    } catch (error) {
+      console.log(error);
+    }
     return Response.json(
       {
         success: true,
@@ -111,11 +117,15 @@ export async function PATCH(req: NextRequest) {
     user.password = await hashData(password);
     user.resetPasswordCode = null;
     await user.save();
-    await sendEmail(
-      email,
-      "Reset password success",
-      resetEmailTemplate(user.fullName)
-    );
+    try {
+      await sendEmail(
+        email,
+        "Reset password success",
+        resetEmailTemplate(user.fullName)
+      );
+    } catch (error) {
+      console.log(error);
+    }
     cookies().set({
       name: "accessToken",
       value: accessToken,

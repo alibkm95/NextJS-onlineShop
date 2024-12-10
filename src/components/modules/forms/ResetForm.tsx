@@ -18,12 +18,24 @@ import {
   findAccountFormValidation,
   resetFormValidation,
 } from "@/lib/validation";
+import { AppDispatch } from "@/store/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KeyRound, LockKeyhole, Mail, RefreshCw } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { z } from "zod";
+import Spinner from "../Spinner";
+import toast from "react-hot-toast";
+import { authUser } from "@/store/features/AuthUserSlice";
 
 const ResetForm = () => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const [acc, setAcc] = useState<string>("");
+  const [findLoading, setFindLoading] = useState<boolean>(false);
+  const [resetLoading, setResetLoading] = useState<boolean>(false);
   const resetForm = useForm<z.infer<typeof resetFormValidation>>({
     resolver: zodResolver(resetFormValidation),
     defaultValues: {
@@ -31,7 +43,6 @@ const ResetForm = () => {
       password: "",
     },
   });
-
   const findForm = useForm<z.infer<typeof findAccountFormValidation>>({
     resolver: zodResolver(findAccountFormValidation),
     defaultValues: {
@@ -40,15 +51,46 @@ const ResetForm = () => {
   });
 
   const handleReset = async (values: z.infer<typeof resetFormValidation>) => {
-    console.log(values);
-    // handle form submition.
+    setResetLoading(true);
+    const res = await fetch("/api/auth/reset", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: acc,
+        otpCode: values.otpCode,
+        password: values.password,
+      }),
+    });
+    const data = await res.json();
+    if (res.status !== 200) {
+      setResetLoading(false);
+      return toast.error(data.msg);
+    }
+    await dispatch(authUser());
+    setResetLoading(false);
+    resetForm.reset();
+    toast.success(data.msg);
+    return router.replace("/panel");
   };
 
   const handleFindAccount = async (
     values: z.infer<typeof findAccountFormValidation>
   ) => {
-    console.log(values);
-    // handle form submition.
+    setFindLoading(true);
+    const res = await fetch("/api/auth/reset", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (res.status !== 200) {
+      setFindLoading(false);
+      return toast.error(data.msg);
+    }
+    setAcc(values.email);
+    setFindLoading(false);
+    findForm.reset();
+    return toast.success(data.msg);
   };
 
   return (
@@ -70,6 +112,7 @@ const ResetForm = () => {
                 <FormControl>
                   <Input
                     placeholder="Insert your email address ..."
+                    disabled={findLoading || acc ? true : false}
                     type="email"
                     {...field}
                   />
@@ -80,9 +123,11 @@ const ResetForm = () => {
           />
           <Button
             type="submit"
+            disabled={findLoading || acc ? true : false}
             className="bg-emerald-600 hover:bg-emerald-700 w-max ms-auto flex"
           >
-            Send verification code
+            {findLoading && <Spinner />}
+            Get verification code
           </Button>
         </form>
       </Form>
@@ -101,7 +146,11 @@ const ResetForm = () => {
                   OTP-Code
                 </FormLabel>
                 <FormControl>
-                  <InputOTP maxLength={6} {...field}>
+                  <InputOTP
+                    maxLength={6}
+                    {...field}
+                    disabled={resetLoading || !acc}
+                  >
                     <InputOTPGroup>
                       <InputOTPSlot index={0} />
                     </InputOTPGroup>
@@ -141,6 +190,7 @@ const ResetForm = () => {
                 <FormControl>
                   <Input
                     placeholder="Create new password ..."
+                    disabled={resetLoading || !acc}
                     type="password"
                     {...field}
                   />
@@ -151,9 +201,10 @@ const ResetForm = () => {
           />
           <Button
             type="submit"
+            disabled={resetLoading || !acc}
             className="bg-emerald-600 hover:bg-emerald-700 w-max ms-auto flex"
           >
-            <RefreshCw />
+            {resetLoading ? <Spinner /> : <RefreshCw />}
             Reset
           </Button>
         </form>
