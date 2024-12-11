@@ -25,6 +25,12 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/panel", request.url));
   }
 
+  if (user && nextUrl.pathname.startsWith("/admin")) {
+    if (user.role !== "ROOTADMIN" && user.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/not-found", request.url));
+    }
+  }
+
   if (!user && protectedRoutes.includes(nextUrl.pathname)) {
     return NextResponse.redirect(new URL(`/auth/login`, request.url));
   }
@@ -33,5 +39,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin", "/panel", "/auth", "/cart", "/support"],
+  matcher: ["/admin/:path*", "/panel/:path*", "/auth/:path*", "/cart/:path*", "/support/:path*"],
 };

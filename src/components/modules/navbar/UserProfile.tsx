@@ -47,7 +47,7 @@ const UserProfile = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.success("Logout success! Redirecting to home page.");
+        toast.success("Logout success!");
         dispatch(logout());
         router.replace("/");
       })
