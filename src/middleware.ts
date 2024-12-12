@@ -6,6 +6,7 @@ const protectedRoutes = ["/admin", "/panel", "/cart", "/support"];
 export default async function middleware(request: NextRequest) {
   const { nextUrl } = request;
   const token = request.cookies.get("accessToken")?.value;
+  const isAdminAPIRoute = nextUrl.pathname.startsWith("/api/admin");
   let user = null;
 
   if (token) {
@@ -35,9 +36,32 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/auth/login`, request.url));
   }
 
+  if (isAdminAPIRoute) {
+    if (!user) {
+      return NextResponse.json(
+        { success: false, msg: "Unauthorized!" },
+        { status: 401 }
+      );
+    }
+
+    if (user.role !== "ROOTADMIN" && user.role !== "ADMIN") {
+      return NextResponse.json(
+        { success: false, msg: "Forbidden! you can not access to this route." },
+        { status: 403 }
+      );
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/panel/:path*", "/auth/:path*", "/cart/:path*", "/support/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/panel/:path*",
+    "/auth/:path*",
+    "/cart/:path*",
+    "/support/:path*",
+    "/api/admin/:path*",
+  ],
 };
