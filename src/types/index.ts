@@ -30,6 +30,8 @@ export type ProductType = {
   score: number;
   customPart: boolean;
   isPublished: boolean;
+  off?: number;
+  creator?: UserType | object;
   createdAt: string;
   updatedAt: string;
 };
