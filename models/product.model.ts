@@ -13,7 +13,7 @@ const ProductSchema = new mongoose.Schema(
     },
     inventory: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     gallery: {
       type: [String],
@@ -50,7 +50,7 @@ const ProductSchema = new mongoose.Schema(
     },
     isPublished: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     off: {
       type: Number,
