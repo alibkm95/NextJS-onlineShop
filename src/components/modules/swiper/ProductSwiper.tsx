@@ -10,13 +10,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import ProductCardMD from "@/components/modules/itemBox/ProductCardMD";
-
-type ProductType = {
-  id: number;
-  title: string;
-  price: number;
-  img: string;
-};
+import { ProductType } from "@/types";
 
 type ProductSwiperPropsType = {
   products: ProductType[];
@@ -86,7 +80,7 @@ const ProductSwiper = ({
             className="productSwiper bg-transparent"
           >
             {products.map((product) => (
-              <SwiperSlide key={product.id} className="pt-2 pb-12 px-1">
+              <SwiperSlide key={product._id} className="pt-2 pb-12 px-1">
                 <ProductCardMD />
               </SwiperSlide>
             ))}
