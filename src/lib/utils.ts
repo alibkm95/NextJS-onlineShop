@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
@@ -65,4 +65,12 @@ export const formatDateTime = (dateString: Date | string) => {
     dateOnly: formattedDate,
     timeOnly: formattedTime,
   };
+};
+
+export const calculateOffPrice = (priceAmount: number, offAmount: number) => {
+  if (offAmount === 100) {
+    return "Free!";
+  }
+
+  return Math.ceil(priceAmount - (priceAmount * offAmount) / 100).toString();
 };
