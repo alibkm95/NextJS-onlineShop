@@ -12,14 +12,11 @@ import "swiper/css/thumbs";
 import "swiper/css/zoom";
 import "@/styles/Gallery.modules.css";
 
-const fakeGallery = [
-  "https://placehold.co/640x360/orange/white/png",
-  "https://placehold.co/640x360/pink/white/png",
-  "https://placehold.co/640x360/red/white/png",
-  "https://placehold.co/640x360/blue/white/png",
-];
+interface GalleryProps {
+  imgSet: string[];
+}
 
-const Gallery = () => {
+const Gallery = ({ imgSet }: GalleryProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
   return (
     <div className="rounded-lg bg-secondary w-full max-w-[600px] p-2 mx-auto h-max">
@@ -27,15 +24,18 @@ const Gallery = () => {
         <Swiper
           zoom={true}
           spaceBetween={10}
-          thumbs={{ swiper: thumbsSwiper }}
+          thumbs={{
+            swiper:
+              thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+          }}
           modules={[Zoom, Thumbs]}
           className="swiperGallery cursor-move"
         >
-          {fakeGallery.map((img, index) => (
+          {imgSet.map((img, index) => (
             <SwiperSlide key={index}>
               <div className="swiper-zoom-container">
                 <Image
-                  src={img}
+                  src={`/uploads/products/${img}`}
                   className="rounded-md w-full"
                   width={640}
                   height={360}
@@ -46,7 +46,7 @@ const Gallery = () => {
           ))}
         </Swiper>
         <Swiper
-          onSwiper={(swiper: SwiperCore) => setThumbsSwiper(swiper)}
+          onSwiper={setThumbsSwiper}
           spaceBetween={10}
           slidesPerView={3}
           freeMode={true}
@@ -54,10 +54,10 @@ const Gallery = () => {
           modules={[FreeMode, Navigation, Thumbs]}
           className="swiperGalleryThumb mt-4 cursor-pointer"
         >
-          {fakeGallery.map((img, index) => (
+          {imgSet.map((img, index) => (
             <SwiperSlide key={index}>
               <Image
-                src={img}
+                src={`/uploads/products/${img}`}
                 width={640}
                 height={360}
                 className="rounded-md"

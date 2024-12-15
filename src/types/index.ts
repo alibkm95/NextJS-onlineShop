@@ -31,6 +31,7 @@ export type ProductType = {
   customPart: boolean;
   isPublished: boolean;
   off?: number;
+  comments?: CommentType[] | [];
   creator?: UserType | object;
   createdAt: string;
   updatedAt: string;

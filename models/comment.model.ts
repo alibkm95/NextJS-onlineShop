@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
-import UserModel from "./user.model";
-import ProductModel from "./product.model";
+// import UserModel from "./user.model";
+// import ProductModel from "./product.model";
+require("./user.model");
+require("./product.model");
 
 const CommentSchema = new mongoose.Schema(
   {

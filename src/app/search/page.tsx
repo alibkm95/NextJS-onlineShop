@@ -52,12 +52,12 @@ const SearchPage = () => {
             </div>
           ) : (
             <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center">
+              {/* <ProductCardMD />
               <ProductCardMD />
               <ProductCardMD />
               <ProductCardMD />
               <ProductCardMD />
-              <ProductCardMD />
-              <ProductCardMD />
+              <ProductCardMD /> */}
             </div>
           )}
           <div className="mt-8">

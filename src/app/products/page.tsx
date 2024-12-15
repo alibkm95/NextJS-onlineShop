@@ -32,11 +32,11 @@ const Products = () => {
           </div>
           <div className="p-4">
             <div className="grid place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {/* <ProductCardMD />
               <ProductCardMD />
               <ProductCardMD />
               <ProductCardMD />
-              <ProductCardMD />
-              <ProductCardMD />
+              <ProductCardMD /> */}
             </div>
             <div className="py-4 mt-4">
               <CustomPagination />
