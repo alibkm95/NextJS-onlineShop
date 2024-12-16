@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import Footer from "@/components/modules/footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { StoreProvider } from "@/providers/StoreProvider";
+import ScrollToTop from "@/components/modules/ScrollToTop";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,6 +41,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ScrollToTop />
             <Navbar />
             {children}
             <Footer />
