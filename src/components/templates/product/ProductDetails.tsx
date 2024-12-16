@@ -103,7 +103,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           <ProductComments />
         </div>
         <div className="border rounded-md h-max lg:col-span-1">
-          <SimilarProducts />
+          <SimilarProducts category={product.category} />
         </div>
       </div>
     </div>

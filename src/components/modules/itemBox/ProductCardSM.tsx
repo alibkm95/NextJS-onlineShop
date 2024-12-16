@@ -1,14 +1,25 @@
 import { Button } from "@/components/ui/button";
+import { calculateOffPrice } from "@/lib/utils";
+import { ProductType } from "@/types";
 import { DollarSign, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductCardSM = ({ showBtn }: { showBtn?: boolean }) => {
+interface ProductCardSMProps {
+  showBtn?: boolean;
+  product: ProductType;
+}
+
+const ProductCardSM = ({ showBtn, product }: ProductCardSMProps) => {
   return (
     <div className="border rounded-sm p-2 bg-secondary space-y-2 w-full max-w-72 lg:max-w-full mx-auto">
       <div className="flex flex-col items-center gap-2 md:flex-row">
         <Image
-          src="/images/product-fallback.png"
+          src={
+            product.gallery.length > 0
+              ? `/uploads/products/${product.gallery[0]}`
+              : `/images/product-fallback.png`
+          }
           width={100}
           height={100}
           alt="product"
@@ -16,16 +27,25 @@ const ProductCardSM = ({ showBtn }: { showBtn?: boolean }) => {
         />
         <div className="space-y-1 flex-1 w-full">
           <Link
-            href="/products/123"
+            href={`/products/${product._id}`}
             className="text-foreground font-semibold text-center block hover:underline hover:text-primary md:text-start"
           >
-            Product Name
+            {product.name}
           </Link>
-          <span className="text-sm flex items-center justify-center md:justify-start">
-            <DollarSign className="text-emerald-600" size={15} />
-            128.50
-            <span className="opacity-70 line-through ms-2">150.00</span>
-          </span>
+          {product.off! > 0 ? (
+            <span className="text-sm flex items-center justify-center md:justify-start">
+              <DollarSign className="text-emerald-600" size={15} />
+              {calculateOffPrice(product.price, product.off!)}
+              <span className="opacity-70 line-through ms-2">
+                {product.price}
+              </span>
+            </span>
+          ) : (
+            <span className="text-sm flex items-center justify-center md:justify-start">
+              <DollarSign className="text-emerald-600" size={15} />
+              {product.price}
+            </span>
+          )}
         </div>
       </div>
       {showBtn && (
