@@ -26,6 +26,8 @@ const Product = async ({ params }: { params: Params }) => {
     })
       .populate({
         path: "comments",
+        match: { status: "approved" },
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: "user",
           model: "User",

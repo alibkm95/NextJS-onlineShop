@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,32 +10,44 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { newCommentFormValidation } from "@/lib/validation";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MessageSquareText, Send, Star } from "lucide-react";
+import { useParams } from "next/navigation";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
-import {
-  Mail,
-  MessageSquareText,
-  Send,
-  Star,
-  UserRoundPen,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
+import Spinner from "../Spinner";
 
 const NewCommentForm = () => {
+  const { productId } = useParams();
+  const [loading, setLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof newCommentFormValidation>>({
     resolver: zodResolver(newCommentFormValidation),
     defaultValues: {
       commentText: "",
-      score: 0,
+      score: 5,
     },
   });
 
   const handleSubmitComment = async (
     values: z.infer<typeof newCommentFormValidation>
   ) => {
-    console.log(values);
-    // handle form submition.
+    setLoading(true);
+    const res = await fetch("/api/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product: productId, ...values }),
+    });
+    const data = await res.json();
+    if (res.status !== 201) {
+      setLoading(false);
+      return toast.error(data.msg);
+    }
+    setLoading(false);
+    toast.success(data.msg);
+    toast.success("Your comment will appear in the comments after admin approval.")
+    return form.reset();
   };
 
   return (
@@ -57,7 +68,7 @@ const NewCommentForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Tell us whay is in your mind ..."
+                    placeholder="Tell us what is in your mind ..."
                     className="h-40"
                     {...field}
                   />
@@ -86,7 +97,7 @@ const NewCommentForm = () => {
             type="submit"
             className="bg-emerald-600 hover:bg-emerald-700 w-max"
           >
-            <Send />
+            {loading ? <Spinner /> : <Send />}
             Submit comment
           </Button>
         </form>

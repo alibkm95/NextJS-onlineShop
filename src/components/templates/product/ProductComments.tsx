@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 interface ProductCommentsProps {
-  comments: CommentType[] | [];
+  comments: CommentType[];
 }
 
 interface CommentProps {
@@ -31,13 +31,19 @@ const ProductComments = ({ comments }: ProductCommentsProps) => {
   const totalPages = Math.ceil(comments.length / itemPerPage);
   const endIndex = page * itemPerPage;
   const startIndex = endIndex - itemPerPage;
-  const commentContainerRef = useRef(null);
+  const commentsContainerRef = useRef<HTMLDivElement | null>(null);
+  const [firstRender, setFirstRender] = useState<boolean>(true);
 
   useEffect(() => {
     const pageItems = comments.slice(startIndex, endIndex);
     setPaginatedComments(pageItems);
-    // todo =====> handle scroll into view type error
-    // commentContainerRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (commentsContainerRef.current && !firstRender) {
+      commentsContainerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+    setFirstRender(false);
   }, [page, comments]);
 
   const handleNextPage = () => {
@@ -61,7 +67,7 @@ const ProductComments = ({ comments }: ProductCommentsProps) => {
   };
 
   return (
-    <div className="p-2">
+    <div className="p-2" ref={commentsContainerRef}>
       <Accordion
         type="single"
         collapsible
@@ -87,10 +93,7 @@ const ProductComments = ({ comments }: ProductCommentsProps) => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      <div
-        className="flex flex-col gap-2 pt-2 px-2 md:px-4"
-        ref={commentContainerRef}
-      >
+      <div className="flex flex-col gap-2 pt-2 px-2 md:px-4">
         {paginatedComments.length > 0 ? (
           paginatedComments.map((comment) => (
             <Comment key={comment._id} comment={comment} />

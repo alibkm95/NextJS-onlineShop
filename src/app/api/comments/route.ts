@@ -12,7 +12,10 @@ export async function POST(req: NextRequest) {
     const user = await authenticateUser(undefined);
     if (!user) {
       return Response.json(
-        { success: false, msg: "Unauthorized!" },
+        {
+          success: false,
+          msg: "Submitting a comment requires login with a valid account!",
+        },
         { status: 401 }
       );
     }
