@@ -1,5 +1,5 @@
 import CustomBadge from "@/components/modules/CustomBadge";
-import SectionNotFound from "@/components/modules/SectionNotFound";
+import SectionNotFound from "@/components/modules/notFound/SectionNotFound";
 import {
   Table,
   TableBody,

@@ -27,8 +27,6 @@ const NewCommentForm = () => {
   const form = useForm<z.infer<typeof newCommentFormValidation>>({
     resolver: zodResolver(newCommentFormValidation),
     defaultValues: {
-      fullName: "",
-      email: "",
       commentText: "",
       score: 0,
     },
@@ -48,46 +46,6 @@ const NewCommentForm = () => {
           onSubmit={form.handleSubmit(handleSubmitComment)}
           className="space-y-4 w-full"
         >
-          <FormField
-            control={form.control}
-            name="fullName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center gap-2 ps-2">
-                  <UserRoundPen size={18} />
-                  Full name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Your full name ..."
-                    type="text"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-destructive" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center gap-2 ps-2">
-                  <Mail size={18} />
-                  E-Mail
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Your email address ..."
-                    type="email"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-destructive" />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="commentText"

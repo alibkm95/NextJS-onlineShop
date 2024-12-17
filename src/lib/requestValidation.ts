@@ -88,3 +88,14 @@ export const productValidation = z.object({
     )
     .transform((val) => Number(val)),
 });
+
+export const addCommentValidation = z.object({
+  product: z.string({ required_error: "Candidate product must be provided!" }),
+  commentText: z
+    .string({ required_error: "Comment text must be provided!" })
+    .max(100, "Comment text can not be more than 100 characters!"),
+  score: z
+    .number()
+    .min(1, "Rating score must be provided!")
+    .max(5, "Maximum rating score is 5!"),
+});

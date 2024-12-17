@@ -1,6 +1,6 @@
 import CustomPagination from "@/components/modules/CustomPagination";
 import ProductCardMD from "@/components/modules/itemBox/ProductCardMD";
-import SectionNotFound from "@/components/modules/SectionNotFound";
+import SectionNotFound from "@/components/modules/notFound/SectionNotFound";
 
 const UserWishes = () => {
   return (

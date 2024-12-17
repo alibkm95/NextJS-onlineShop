@@ -102,14 +102,12 @@ export type WishlistType = {
 
 export type CommentType = {
   _id: string;
-  product: {
-    _id: string;
-    name: string;
-  };
+  product: ProductType | string;
   user: {
     _id: string;
     fullName: string;
     email: string;
+    role?: string;
     avatar?: string;
   };
   commentText: string;

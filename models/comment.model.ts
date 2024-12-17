@@ -33,6 +33,7 @@ const CommentSchema = new mongoose.Schema(
         values: ["pending", "approved", "rejected"],
         message: "{VALUE} is not a valid status type!",
       },
+      default: "pending",
     },
   },
   {

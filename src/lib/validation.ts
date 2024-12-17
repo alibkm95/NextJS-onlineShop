@@ -76,17 +76,9 @@ export const shopFilterFormValidation = z.object({
 });
 
 export const newCommentFormValidation = z.object({
-  fullName: z
-    .string()
-    .min(3, "Name must be at least 3 characters!")
-    .max(50, "Name must be at most 50 characters!")
-    .trim()
-    .toLowerCase(),
-  email: z.string().email("Invalid email address!").trim().toLowerCase(),
   commentText: z
-    .string()
-    .max(100, "Comment text can not be more than 100 characters!")
-    .refine((val) => val !== "", "Comment text must be provided!"),
+    .string({required_error: "Comment text must be provided!"})
+    .max(100, "Comment text can not be more than 100 characters!"),
   score: z
     .number()
     .min(1, "Rating score must be provided!")

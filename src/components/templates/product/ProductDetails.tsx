@@ -100,7 +100,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       </div>
       <div className="mt-4 grid grid-cols-1 gap-2 lg:grid-cols-3">
         <div className="border rounded-md h-max lg:col-span-2 lg:order-2">
-          <ProductComments />
+          <ProductComments comments={product.comments} />
         </div>
         <div className="border rounded-md h-max lg:col-span-1">
           <SimilarProducts category={product.category} />
