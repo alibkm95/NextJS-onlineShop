@@ -71,7 +71,6 @@ export const calculateOffPrice = (priceAmount: number, offAmount: number) => {
   if (offAmount === 100) {
     return "Free!";
   }
-  // return Math.ceil(priceAmount - (priceAmount * offAmount) / 100).toString();
   const discountedPrice = priceAmount - (priceAmount * offAmount) / 100;
   return (Math.ceil(discountedPrice * 100) / 100).toFixed(2);
 };

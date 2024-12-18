@@ -15,6 +15,7 @@ import ProductComments from "./ProductComments";
 import SimilarProducts from "./SimilarProducts";
 import { ProductType } from "@/types";
 import { calculateOffPrice } from "@/lib/utils";
+import ProductActions from "./ProductActions";
 
 interface ProductDetailsProps {
   product: ProductType;
@@ -51,18 +52,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 </Badge>
               ))}
           </div>
-          <div className="flex items-center flex-row-reverse gap-2 flex-wrap">
-            <Button className="bg-emerald-600 hover:bg-emerald-700 [&_svg]:size-6">
-              {/* todo: handle add to cart */}
-              <IoBagAdd />
-              Add to cart
-            </Button>
-            <Button variant="outline" className="[&_svg]:size-6">
-              {/* todo: handle add to wishes or remove from wish list */}
-              <Heart className="text-primary fill-primary" />
-              Add to Wishlist
-            </Button>
-          </div>
+          <ProductActions productId={product._id} />
           <div className="border-t p-2 text-sm lg:px-4 md:text-base">
             <p>{product.description}</p>
           </div>

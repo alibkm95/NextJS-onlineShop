@@ -137,3 +137,9 @@ export type TestimonialType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type ShoppingCartType = {
+  product: ProductType;
+  quantity: number;
+  rowTotal: number;
+};
