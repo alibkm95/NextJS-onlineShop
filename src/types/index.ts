@@ -141,5 +141,4 @@ export type TestimonialType = {
 export type ShoppingCartType = {
   product: ProductType;
   quantity: number;
-  rowTotal: number;
 };

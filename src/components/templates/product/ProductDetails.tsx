@@ -52,7 +52,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 </Badge>
               ))}
           </div>
-          <ProductActions productId={product._id} />
+          <ProductActions product={product} />
           <div className="border-t p-2 text-sm lg:px-4 md:text-base">
             <p>{product.description}</p>
           </div>

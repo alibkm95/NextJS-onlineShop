@@ -38,7 +38,6 @@ const cartSlice = createSlice({
         state.shoppingCart.push({
           product,
           quantity: 1,
-          rowTotal: calculatePriceAmount(product.price, product.off!),
         });
         localStorage.setItem(
           "shoppingCart",
@@ -54,13 +53,6 @@ const cartSlice = createSlice({
 
       if (existingItem) {
         existingItem.quantity += 1;
-        existingItem.rowTotal =
-          existingItem.quantity *
-          calculatePriceAmount(
-            existingItem.product.price,
-            existingItem.product.off!
-          );
-
         localStorage.setItem(
           "shoppingCart",
           JSON.stringify(state.shoppingCart)
@@ -74,13 +66,6 @@ const cartSlice = createSlice({
       );
       if (existingItem && existingItem.quantity > 1) {
         existingItem.quantity -= 1;
-        existingItem.rowTotal =
-          existingItem.quantity *
-          calculatePriceAmount(
-            existingItem.product.price,
-            existingItem.product.off!
-          );
-        
         localStorage.setItem(
           "shoppingCart",
           JSON.stringify(state.shoppingCart)
