@@ -18,6 +18,21 @@ interface GalleryProps {
 
 const Gallery = ({ imgSet }: GalleryProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
+
+  if (!imgSet.length) {
+    return (
+      <div className="rounded-lg bg-secondary w-full max-w-[600px] p-2 mx-auto h-max">
+        <Image
+          src={`/images/product-fallback.png`}
+          className="rounded-md w-full"
+          width={640}
+          height={360}
+          alt="product gallery image"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-lg bg-secondary w-full max-w-[600px] p-2 mx-auto h-max">
       <div>

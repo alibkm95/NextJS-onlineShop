@@ -9,16 +9,16 @@ const initialState: ShoppingCartState = {
   shoppingCart: JSON.parse(localStorage.getItem("shoppingCart") || "[]"),
 };
 
-const calculatePriceAmount: (
-  priceAmount: number,
-  offAmount: number
-) => number = (priceAmount, offAmount) => {
-  if (offAmount === 0) {
-    return priceAmount;
-  }
-  const discountedPrice = priceAmount - (priceAmount * offAmount) / 100;
-  return +(Math.ceil(discountedPrice * 100) / 100).toFixed(2);
-};
+// const calculatePriceAmount: (
+//   priceAmount: number,
+//   offAmount: number
+// ) => number = (priceAmount, offAmount) => {
+//   if (offAmount === 0) {
+//     return priceAmount;
+//   }
+//   const discountedPrice = priceAmount - (priceAmount * offAmount) / 100;
+//   return +(Math.ceil(discountedPrice * 100) / 100).toFixed(2);
+// };
 
 const cartSlice = createSlice({
   name: "shoppingCart",
