@@ -1,8 +1,14 @@
 "use client";
+import Spinner from "@/components/modules/Spinner";
 import { Button } from "@/components/ui/button";
 import { addToCart, removeOne } from "@/store/features/ShoppingCartSlice";
+import {
+  addToWishList,
+  fetchWishes,
+  removeFromWishList,
+} from "@/store/features/WishesSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import { ProductType } from "@/types";
+import { ProductType, WishType } from "@/types";
 import { Heart, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,10 +21,23 @@ interface ProductActionsProps {
 
 const ProductActions = ({ product }: ProductActionsProps) => {
   const [existingCartItem, setExistingCartItem] = useState<boolean>(false);
+  const [existingWishItem, setExistingWishItem] = useState<WishType | null>(
+    null
+  );
   const dispatch = useDispatch<AppDispatch>();
   const { shoppingCart } = useSelector(
     (state: RootState) => state.shoppingCart
   );
+  const { wishes, loading, error } = useSelector(
+    (state: RootState) => state.wishes
+  );
+  const { user } = useSelector((state: RootState) => state.authUser);
+
+  useEffect(() => {
+    if (!wishes) {
+      dispatch(fetchWishes());
+    }
+  }, []);
 
   useEffect(() => {
     const cartItem = shoppingCart.find(
@@ -27,14 +46,49 @@ const ProductActions = ({ product }: ProductActionsProps) => {
     setExistingCartItem(cartItem ? true : false);
   }, [shoppingCart]);
 
+  useEffect(() => {
+    if (wishes) {
+      const wishItem = wishes.find((wish) => wish.product._id === product._id);
+      setExistingWishItem(wishItem ?? null);
+    }
+  }, [wishes]);
+
   const addToShoppingCart = () => {
     dispatch(addToCart(product));
     toast.success(product.name + " added to your shopping cart.");
   };
-  
+
   const removeFromCart = () => {
     dispatch(removeOne(product._id));
     toast.success(product.name + " removed from shopping cart.");
+  };
+
+  const addToWishes = async () => {
+    if (!user) {
+      return toast.error(
+        "register or login with your account to add or remove product from your wishlist."
+      );
+    }
+    await dispatch(addToWishList({ productId: product._id }));
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success(product.name + " added to wishlist.");
+    }
+  };
+
+  const removeFromWishes = async (wishId: string) => {
+    if (!user) {
+      return toast.error(
+        "register or login with your account to add or remove product from your wishlist."
+      );
+    }
+    await dispatch(removeFromWishList({ wishId }));
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success(product.name + " removed from wishlist.");
+    }
   };
 
   return (
@@ -57,11 +111,29 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           Add to cart
         </Button>
       )}
-
-      <Button variant="outline" className="[&_svg]:size-6">
-        <Heart className="text-primary fill-primary" />
-        Add to Wishlist
-      </Button>
+      {existingWishItem ? (
+        <Button
+          variant="outline"
+          className="[&_svg]:size-6"
+          onClick={() => removeFromWishes(existingWishItem._id)}
+        >
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Heart className="text-primary fill-primary" />
+          )}
+          Remove from Wishlist
+        </Button>
+      ) : (
+        <Button
+          variant="outline"
+          className="[&_svg]:size-6"
+          onClick={addToWishes}
+        >
+          {loading ? <Spinner /> : <Heart className="text-primary" />}
+          Add to Wishlist
+        </Button>
+      )}
     </div>
   );
 };

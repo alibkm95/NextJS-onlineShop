@@ -92,14 +92,6 @@ export type ConversationType = {
   updatedAt: string;
 };
 
-export type WishlistType = {
-  _id: string;
-  user: string | UserType;
-  products: string[] | ProductType[];
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type CommentType = {
   _id: string;
   product: ProductType | string;
@@ -141,4 +133,12 @@ export type TestimonialType = {
 export type ShoppingCartType = {
   product: ProductType;
   quantity: number;
+};
+
+export type WishType = {
+  _id: string;
+  user: string;
+  product: ProductType;
+  createdAt: string;
+  updatedAt: string;
 };
