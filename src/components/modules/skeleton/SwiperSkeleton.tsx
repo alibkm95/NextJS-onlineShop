@@ -54,12 +54,6 @@ const SwiperSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-1">
-        <Skeleton className="w-2 h-2 rounded-full" />
-        <Skeleton className="w-2 h-2 rounded-full" />
-        <Skeleton className="w-2 h-2 rounded-full" />
-        <Skeleton className="w-2 h-2 rounded-full" />
-      </div>
     </div>
   );
 };
