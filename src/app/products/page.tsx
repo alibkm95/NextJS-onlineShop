@@ -8,6 +8,7 @@ import MaxWidthWrapper from "@/components/modules/MaxWidthWrapper";
 import ProductNotFound from "@/components/modules/notFound/ProductNotFound";
 import SwiperSkeleton from "@/components/modules/skeleton/SwiperSkeleton";
 import ShopFilter from "@/components/templates/ShopFilter";
+import { filterProducts } from "@/lib/utils";
 import { fetchProducts } from "@/store/features/ProductsSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ProductType } from "@/types";
@@ -26,7 +27,7 @@ const Products = () => {
     { page: "Shop", path: null },
   ];
   const [paginatedProducts, setPaginatedProducts] = useState<ProductType[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
+  const filterOptions = useSelector((state: RootState) => state.filter);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const itemPerPage = 12;
@@ -43,8 +44,9 @@ const Products = () => {
 
   useEffect(() => {
     if (products) {
-      const pageItems = products.slice(startIndex, endIndex);
-      setTotalPages(Math.ceil(products.length / itemPerPage));
+      const filteredProducts = filterProducts(products, filterOptions);
+      const pageItems = filteredProducts.slice(startIndex, endIndex);
+      setTotalPages(Math.ceil(filteredProducts.length / itemPerPage));
       setPaginatedProducts(pageItems);
       if (productsContainerRef.current && !firstRender) {
         productsContainerRef.current.scrollIntoView({
@@ -54,7 +56,7 @@ const Products = () => {
       }
       setFirstRender(false);
     }
-  }, [page, products]);
+  }, [page, products, filterOptions]);
 
   const handleNextPage = () => {
     if (page === totalPages) {

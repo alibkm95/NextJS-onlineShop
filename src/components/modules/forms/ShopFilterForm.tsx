@@ -21,6 +21,8 @@ import {
 import { Switch } from "@/components/ui/switch";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { shopFilterFormValidation } from "@/lib/validation";
+import { applyFilter, resetFilter } from "@/store/features/FilterProductsSlice";
+import { AppDispatch, RootState } from "@/store/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowDown10,
@@ -35,30 +37,40 @@ import {
   Component,
   Filter,
   RotateCcw,
-  Star
+  Search,
+  Star,
 } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { MdElectricScooter } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
-const ShopFilterForm = () => {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+const ShopFilterForm = ({ onClose }: { onClose: () => void }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { productName, category, sort, onlyDiscounted } = useSelector(
+    (state: RootState) => state.filter
+  );
   const form = useForm<z.infer<typeof shopFilterFormValidation>>({
     resolver: zodResolver(shopFilterFormValidation),
     defaultValues: {
-      category: "all",
-      minPrice: "0",
-      maxPrice: "10000",
-      hasDiscount: false,
-      sort: "newest",
+      productName,
+      category,
+      onlyDiscounted,
+      sort,
     },
   });
+
+  const handleResetFilter = () => {
+    dispatch(resetFilter());
+    onClose();
+  };
 
   const handleFilter = async (
     values: z.infer<typeof shopFilterFormValidation>
   ) => {
-    console.log(values);
-    // handle form submition.
+    dispatch(applyFilter({ ...values }));
+    onClose();
   };
 
   return (
@@ -67,6 +79,26 @@ const ShopFilterForm = () => {
         onSubmit={form.handleSubmit(handleFilter)}
         className="space-y-6 w-full py-4 px-1 max-w-xl mx-auto"
       >
+        <FormField
+          control={form.control}
+          name="productName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2 ps-2">
+                <Search size={18} />
+                Product name or title
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Insert product name or title ..."
+                  type="text"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-destructive" />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="category"
@@ -89,67 +121,27 @@ const ShopFilterForm = () => {
                       All
                     </p>
                   </SelectItem>
-                  <SelectItem value="cars">
+                  <SelectItem value="car">
                     <p className="flex items-center gap-2">
                       <Car size={15} />
-                      Cars
+                      Car
                     </p>
                   </SelectItem>
-                  <SelectItem value="bikes">
+                  <SelectItem value="bike">
                     <p className="flex items-center gap-2">
                       <Bike size={15} />
-                      Bikes
+                      Bike
                     </p>
                   </SelectItem>
-                  <SelectItem value="scooters">
+                  <SelectItem value="scooter">
                     <p className="flex items-center gap-2">
                       <MdElectricScooter size={15} />
-                      Scooters
+                      Scooter
                     </p>
                   </SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="minPrice"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center gap-2 ps-2">
-                <ArrowDown10 size={18} />
-                Min price
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Insert minimum price range ..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-destructive" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="maxPrice"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center gap-2 ps-2">
-                <ArrowUp10 size={18} />
-                Max price
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Insert maximum price range ..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-destructive" />
             </FormItem>
           )}
         />
@@ -207,7 +199,7 @@ const ShopFilterForm = () => {
         />
         <FormField
           control={form.control}
-          name="hasDiscount"
+          name="onlyDiscounted"
           render={({ field }) => (
             <FormItem>
               <div className="flex items-center gap-4">
@@ -225,51 +217,24 @@ const ShopFilterForm = () => {
             </FormItem>
           )}
         />
-        {isDesktop ? (
-          <div className="flex items-center gap-2">
-            <DialogClose asChild>
-              <Button
-                type="button"
-                variant="secondary"
-                className="w-max ms-auto flex"
-              >
-                <RotateCcw />
-                Reset and close
-              </Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <Button
-                type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 w-max flex"
-              >
-                <Filter className="fill-primary-foreground" />
-                Apply filter
-              </Button>
-            </DialogClose>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <DrawerClose asChild>
-              <Button
-                type="button"
-                variant="secondary"
-                className="w-max ms-auto flex"
-              >
-                <RotateCcw />
-                Reset and close
-              </Button>
-            </DrawerClose>
-            <DrawerClose asChild>
-              <Button
-                type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 w-max flex"
-              >
-                <Filter className="fill-primary-foreground" />
-                Apply filter
-              </Button>
-            </DrawerClose>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-max ms-auto flex"
+            onClick={handleResetFilter}
+          >
+            <RotateCcw />
+            Reset and close
+          </Button>
+          <Button
+            type="submit"
+            className="bg-emerald-600 hover:bg-emerald-700 w-max flex"
+          >
+            <Filter className="fill-primary-foreground" />
+            Apply filter
+          </Button>
+        </div>
       </form>
     </Form>
   );

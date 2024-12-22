@@ -1,3 +1,4 @@
+import { FilterOptionType, ProductType } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -73,4 +74,58 @@ export const calculateOffPrice = (priceAmount: number, offAmount: number) => {
   }
   const discountedPrice = priceAmount - (priceAmount * offAmount) / 100;
   return (Math.ceil(discountedPrice * 100) / 100).toFixed(2);
+};
+
+export const filterProducts: (
+  products: ProductType[],
+  filterOptions: FilterOptionType
+) => ProductType[] = (products, filterOptions) => {
+  let filteredProducts = products;
+  if (filterOptions.productName) {
+    const regex = new RegExp(filterOptions.productName, "i");
+    filteredProducts = filteredProducts.filter((product) =>
+      regex.test(product.name)
+    );
+  }
+  if (filterOptions.category && filterOptions.category !== "all") {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category === filterOptions.category
+    );
+  }
+  if (filterOptions.onlyDiscounted) {
+    filteredProducts = filteredProducts.filter((product) => product.off! > 0);
+  }
+  const sortedProducts = [...filteredProducts];
+  if (filterOptions.sort) {
+    switch (filterOptions.sort) {
+      case "a-z":
+        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "z-a":
+        sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case "newest":
+        sortedProducts.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        break;
+      case "oldest":
+        sortedProducts.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+        break;
+      case "popular":
+        sortedProducts.sort((a, b) => b.score - a.score);
+        break;
+      default:
+        sortedProducts.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        break;
+    }
+  }
+  return sortedProducts;
 };

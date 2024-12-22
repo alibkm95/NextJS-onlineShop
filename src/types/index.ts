@@ -142,3 +142,10 @@ export type WishType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type FilterOptionType = {
+  productName?: string;
+  category?: "all" | "car" | "bike" | "scooter";
+  sort?: "a-z" | "z-a" | "newest" | "oldest" | "popular";
+  onlyDiscounted?: boolean;
+};

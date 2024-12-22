@@ -26,6 +26,7 @@ import { Separator } from "../ui/separator";
 const ShopFilter = () => {
   const [open, setOpen] = useState<boolean>(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const handleClose = () => setOpen(false);
 
   if (isDesktop) {
     return (
@@ -43,7 +44,7 @@ const ShopFilter = () => {
           </DialogHeader>
           <Separator />
           <ScrollArea className="h-[200px] pe-2">
-            <ShopFilterForm />
+            <ShopFilterForm onClose={handleClose} />
           </ScrollArea>
         </DialogContent>
       </Dialog>
@@ -64,7 +65,7 @@ const ShopFilter = () => {
           <DrawerDescription>Set filter to products</DrawerDescription>
         </DrawerHeader>
         <ScrollArea className="h-[300px] pe-2">
-          <ShopFilterForm />
+          <ShopFilterForm onClose={handleClose} />
         </ScrollArea>
       </DrawerContent>
     </Drawer>

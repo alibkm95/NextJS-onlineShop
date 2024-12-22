@@ -56,22 +56,9 @@ export const ContactFormValidation = z.object({
 });
 
 export const shopFilterFormValidation = z.object({
-  category: z.enum(["all", "cars", "bikes", "scooters", "parts"]),
-  minPrice: z
-    .string()
-    .optional()
-    .refine(
-      (val) => /^(0|[1-9]\d{0,3}|10000)(\.\d+)?$/.test(val!),
-      "The minimum price range must be between 0 and 10,000!"
-    ),
-  maxPrice: z
-    .string()
-    .optional()
-    .refine(
-      (val) => /^(0|[1-9]\d{0,3}|10000)(\.\d+)?$/.test(val!),
-      "The maximum price range must be between 0 and 10,000!"
-    ),
-  hasDiscount: z.boolean().default(false),
+  productName: z.string().optional(),
+  category: z.enum(["all", "car", "bike", "scooter"]).default('all'),
+  onlyDiscounted: z.boolean().default(false),
   sort: z.enum(["a-z", "z-a", "newest", "oldest", "popular"]),
 });
 
